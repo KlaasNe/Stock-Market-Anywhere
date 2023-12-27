@@ -81,3 +81,7 @@ body .conteneur{
 #afficheur_prix td.indice, #afficheur_prix td.prix, #afficheur_prix td.croissance {
     text-align: center;
 }
+
+.rounded {
+    border-radius: .5rem;
+}

@@ -1,5 +1,5 @@
 var default_prices = {
-    "cuv" : {"initial_price" : 1.5, "krach_price" : 0.7, "min_price" : 0.4, "full_name":"Cuvée des Trolls "},
+    "cuv" : {"initial_price" : 1.5, "krach_price" : 0.7, "min_price" : 0.4, "full_name":"Stella"},
     "bar" : {"initial_price" : 2.0, "krach_price" : 1.1, "min_price" : 1.0, "full_name":"Barbar"},
     "cho" : {"initial_price" : 2.0, "krach_price" : 1.12, "min_price" : 0.8, "full_name":"Chouffe"},
     "duv" : {"initial_price" : 1.5, "krach_price" : 0.8, "min_price" : 0.4, "full_name":"Duvel"},
@@ -24,7 +24,6 @@ compteur = 0
 number_of_drinks =  Object.keys(default_prices).length
 for(let i in default_prices){
     if(!default_prices[i]["colour"]){
-        default_prices[i]["colour"] = "hsl(" + Math.ceil(compteur * 360 / (number_of_drinks+1)) + ", 90%, 60%)";
+        default_prices[i]["colour"] = "hsl(" + Math.ceil(compteur++ * 360 / (number_of_drinks+1)) + ", 90%, 60%)";
     }
-    compteur += 1
 }

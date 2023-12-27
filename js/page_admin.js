@@ -42,7 +42,7 @@ function new_interval(set_krach = null){
     indexes.new(set_krach)
 
     if(indexes.is_krach()){
-        krach_prices = prices.krach()
+        krach_prices = prices.crash()
         prices.append(krach_prices)
     } else {
         new_sales_start = indexes.last_non_krach_party_index()[0]
@@ -79,15 +79,40 @@ for(let trigram in default_prices){
 	el_drinks.appendChild(bouton.html())
 }
 
-for(let trigram in sale_buttons){
+for (let trigram in sale_buttons) { // TODO fix da ge sales als een hele queue in een keer pusht zodat ge kunt rechtsklikken om te removen :)
+    let executed_hold = false
     sale_buttons[trigram].dom.addEventListener('click', function() {
-        let actual_price = sale_buttons[trigram].actual_price
-		sales.new(trigram, actual_price)
+        if (!executed_hold) {
+            let actual_price = sale_buttons[trigram].actual_price
+            sales.new(trigram, actual_price)
 
-        new_sale_animation(default_prices[trigram]["colour"], actual_price)
-        sale_buttons[trigram].add_counter(trigram)
-        data_upload("new_sale", [default_prices[trigram]["colour"], actual_price])
+            new_sale_animation(default_prices[trigram]["colour"], actual_price)
+            sale_buttons[trigram].add_counter()
+            data_upload("new_sale", [default_prices[trigram]["colour"], actual_price])
+        }
+        executed_hold = false
 	})
+
+    sale_buttons[trigram].dom.addEventListener('contextmenu', function(event) {
+        event.preventDefault()
+        let actual_price = sale_buttons[trigram].actual_price
+        sales.new(trigram, actual_price)
+
+        sale_buttons[trigram].add_counter(-1)
+    })
+
+    sale_buttons[trigram].dom.addEventListener('mousedown', function(event) {
+        if (event.button === 0) {
+            const time_out = setTimeout(() => {
+                sale_buttons[trigram].add_counter(10)
+                executed_hold = true
+            }, 500)
+
+            sale_buttons[trigram].dom.addEventListener('mouseup', function () {
+                clearTimeout(time_out)
+            })
+        }
+    })
 }
 
 countdown_new_price_el = document.getElementById("remaining_time_til_new_prices")

@@ -17,11 +17,11 @@ class SaleButton{
 		bouton.setAttribute("disabled", "")
 
 		bouton.innerHTML = 
-			"<div class='name'><span class='trigram'>" + this.trigram + "</span> - <span class='full_name'>" + this.fullname + "</span></div>" +
+			"<div class='name'><span class='trigram'>" + this.trigram + "</span> &#x2022; <span class='full_name'>" + this.fullname + "</span></div>" +
 			"<div class='infos'><div class='prices'>" +
-			"<span class='actual_price'>" + this.actual_price + "€</span>" +
+			"<span class='actual_price'>€" + this.actual_price + "</span>" +
 				"<div>" +
-				"<div class='initial_price'>" + this.initial_price + "€</div>" +
+				"<div class='initial_price'>€" + this.initial_price + "</div>" +
 				"<div class='variation'>0%</div>" +
 			"</div></div>" +
 			"<div class='add_sale' style='background-color:" + this.colour + "'>0</div>" +
@@ -53,8 +53,9 @@ class SaleButton{
         this.update_counter()
     }
 
-    add_counter(){
-        this.number_of_sales += 1
+    add_counter(number = 1){
+        this.number_of_sales += number
+        if (this.number_of_sales < 0) this.number_of_sales = 0
         this.update_counter()
     }
 

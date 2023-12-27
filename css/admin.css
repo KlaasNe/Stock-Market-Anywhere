@@ -126,6 +126,7 @@ html.active_krach #krach {
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+    user-select: none;
 }
 .drink[disabled]{
     cursor: not-allowed;
@@ -217,4 +218,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     border-radius: 5px;
     padding:4px 6px;
     color: inherit;
+}
+
+.rounded {
+    border-radius: .25rem;
 }
