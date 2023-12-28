@@ -12,15 +12,15 @@
 	<body style="margin:0" class="dark">
 		<div style="height:100vh;width:100vw;margin:0;overflow:hidden;display:flex; flex-flow: column;">
 			<div id="remerciements" style="position:absolute; color:rgba(255,255,255,0.6); top:0px; right:6px;">
-				Developed by: Marc Bresson & Klaas
+				Developed by: Marc Bresson & Klaas Neyens
 			</div>
 			<div class="conteneur" style="margin:20px 10px 0px 10px; padding:0px">
 				<div id="banniere">
 					<div id="logo" style="float:left;">
 						<img src="../parametres/logo.png" class="rounded" height="100%"/>
 					</div>
-					<div id="titre">
-						Soirée bourse
+					<div id="title">
+						<template>Soirée bourse</template>
 					</div>
 					<span id="cheapest">
 						<span>cheapest</span>
@@ -39,7 +39,7 @@
 						<thead>
 							<tr>
 								<th class="cercle"></th>
-								<th class="nom">name</th>
+								<th class="nom">Name</th>
 								<th class="indice">index</th>
 								<th class="prix">price</th>
 								<th class="croissance">growth</th>
@@ -56,8 +56,6 @@
 </html>
 
 <script>
-<!--	TODO SMIJT DEES WEG VANAF DA HT KAN -->
-	curves_to_display = 20
 	minutes_for_points_history = 15
 </script>
 

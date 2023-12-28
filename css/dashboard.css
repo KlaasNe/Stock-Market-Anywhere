@@ -22,7 +22,7 @@ body .conteneur{
     height:90px;
     box-sizing: border-box;
 }
-#titre {
+#title {
     font-size: 45px;
     font-weight: 700;
     margin-left: 25px;
@@ -84,4 +84,11 @@ body .conteneur{
 
 .rounded {
     border-radius: .5rem;
+}
+
+.nom {
+    text-align: left;
+}
+.color-indicator-table {
+    padding-left: .5rem;
 }

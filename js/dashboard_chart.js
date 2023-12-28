@@ -1,4 +1,5 @@
 const ctx = document.getElementById('chart').getContext('2d');
+const curves_to_display = number_of_drinks
 
 const config = {
   type: 'line',
@@ -64,8 +65,8 @@ class ChartExtension{
 		}
 	}
 
-	addAxisLabel(start_index){
-		if(this.chart.data.labels.length == 0 || this.chart.data.labels.at(-1) < start_index){
+	addAxisLabel(start_index) {
+		if(this.chart.data.labels.length === 0 || this.chart.data.labels.at(-1) < start_index){
 			this.chart.data.labels.push(start_index);
 			return true
 		}
@@ -73,7 +74,7 @@ class ChartExtension{
 		return false
 	}
 
-	OldestDataPoint(){
+	OldestDataPoint() {
 		return this.chart.data.labels[0]
 	}
 
@@ -103,7 +104,7 @@ class ChartExtension{
 	}
 
 	removeDataset() {
-		this.chart.data.datasets.splice(0,1)
+		this.chart.data.datasets.splice(0, 1)
 		this.trigram_displayed.splice(0,1)
 	}
 
@@ -124,7 +125,7 @@ function init_chart(){
     chart.update()
 }
 
-function display_new_curve(){
+function display_new_curve() {
     let trigram = trigram_to_display()
 	let last_prices = prices_history[trigram].slice(- nbr_of_point_to_display())
     let full_name = default_prices[trigram]["full_name"]
@@ -132,7 +133,7 @@ function display_new_curve(){
 
 	chart.addNewCurve(trigram, full_name, color, last_prices)
     
-    if(chart.getNbrCurveMissing() > 1){
+    if (chart.getNbrCurveMissing() > 1) {
         display_new_curve()
     }
     chart.update()
@@ -156,8 +157,8 @@ function add_new_prices_to_chart(){
     let need_update = chart.addAxisLabel(indexes.party_index.at(-1)[0])
 
 	if(need_update){
-		for(index in chart.trigram_displayed){
-			trigram = chart.trigram_displayed[index]
+		for(const index in chart.trigram_displayed){
+			const trigram = chart.trigram_displayed[index]
 			chart.addDataPoint(trigram, last_prices[trigram])
 		}
 	}

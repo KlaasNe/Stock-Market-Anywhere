@@ -1,12 +1,13 @@
-const minuterie_display_new_curve = new Minuterie(20, display_new_curve)
 const prices_listener = new ChangeListener("prices");
 const new_sale_listener = new ChangeListener("new_sale")
 let prices_history
 let indexes
 let is_krach
+
 init()
 
 function init(){
+    document.getElementById("title").innerHTML = title;
     prices_listener.check()
     prices_history = prices_listener.value["prices_history"]
     indexes = data_get_information("indexes")
@@ -17,8 +18,6 @@ function init(){
 }
 
 setInterval(() => {
-    minuterie_display_new_curve.check()
-
     if (prices_listener.check()) {
         prices_history = prices_listener.value["prices_history"]
         indexes = data_get_information("indexes")
@@ -32,6 +31,9 @@ setInterval(() => {
 }, 500)
 
 setInterval(() => {
+    if (chart.getNbrCurveMissing() > 1) // No idea why this doesn't work for >0
+        display_new_curve()
+
     if (new_sale_listener.check()) {
         const sales = new_sale_listener.value
         for (const [_, data] of Object.entries(sales)) {
@@ -88,7 +90,7 @@ function generate_price_display(){
 	for(let trigram in default_prices){
 		tableau.innerHTML += 
 			"<tr class='prix_" + trigram + "'>" +
-				"<td style='color:" + default_prices[trigram]["colour"] + "'>&#11044;</td>" +
+				"<td class='color-indicator-table' style='color:" + default_prices[trigram]["colour"] + "'>&#11044;</td>" +
 				"<td>" + default_prices[trigram]["full_name"] + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
 				"<td class='prix'>" + last_prices[trigram] + " &euro;</td>" +

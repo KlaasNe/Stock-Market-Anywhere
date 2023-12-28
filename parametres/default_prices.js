@@ -19,10 +19,12 @@ const default_prices = {
     "Pbet" : {"initial_price" : 3, "crash_price" : 1.4, "full_name":"Bête (Pinte)"},
 }
 
+title = "Beurscafé (wtf zo cool B^) )"
+
 compteur = 0
-number_of_drinks =  Object.keys(default_prices).length
-for(let i in default_prices){
-    if(!default_prices[i]["colour"]){
-        default_prices[i]["colour"] = "hsl(" + Math.ceil(compteur++ * 360 / (number_of_drinks+1)) + ", 90%, 60%)";
+number_of_drinks =  Object.keys(default_prices).length + 1
+for (let i in default_prices) {
+    if (!default_prices[i]["colour"]) {
+        default_prices[i]["colour"] = "hsl(" + Math.ceil(compteur++ * 360 / number_of_drinks) + ", 90%, 60%)";
     }
 }
