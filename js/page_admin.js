@@ -1,7 +1,7 @@
-var prices = new Prices()
-refresh_period = 60
-var indexes = new Indexes(refresh_period)
-var sales = new Sales()
+const prices = new Prices()
+refresh_period = 2
+const indexes = new Indexes(refresh_period)
+const sales = new Sales()
 
 const sales_queue = []
 
@@ -40,16 +40,20 @@ function init(){
 
 
 function submit_new_sales(set_krach = null){
-    console.log("doing sales omg so business!")
-    for (let i in sales_queue) {
+    const sales_data = {}
+    for (const i in sales_queue) {
         const trigram = sales_queue[i]
         const actual_price = sale_buttons[trigram].actual_price
+        sales_data[trigram] = [
+            default_prices[trigram]["colour"],
+            actual_price,
+            sales_data[trigram] ? sales_data[trigram][2] + 1 : 1
+        ]
         sales.new(trigram, actual_price)
-        new_sale_animation(default_prices[trigram]["colour"], actual_price)
-        data_upload("new_sale", [default_prices[trigram]["colour"], actual_price])
+        // new_sale_animation(default_prices[trigram]["colour"], actual_price)
     }
+    data_upload("new_sale", sales_data)
     sales_queue.splice(0, sales_queue.length)
-
 
     indexes.end()
     indexes.new(set_krach)

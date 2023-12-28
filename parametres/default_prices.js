@@ -17,7 +17,6 @@ const default_prices = {
     "cor" : {"initial_price" : 2.0, "crash_price" : 0.7, "full_name":"Corona"},
     "pin" : {"initial_price" : 1.5, "crash_price" : 0.8, "full_name":"Pinte Sangria"},
     "Pbet" : {"initial_price" : 3, "crash_price" : 1.4, "full_name":"Bête (Pinte)"},
-    "Car" : {"initial_price" : 1.14, "crash_price" : 1.4, "full_name":"Cart'naval"},
 }
 
 compteur = 0

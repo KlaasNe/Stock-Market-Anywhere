@@ -1,13 +1,16 @@
 <div align="center">
     <h1>Stock Market Anywhere</h1>
-    <img src="images/SMA%20logo.png" style="max-width:500px"/>
     <h2>Developed by Marc Bresson</h2>
     <p align="center">
         <a href="https://linkedin.com/in/marc--bresson"><img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555"/></a>
     </p>
+    <h3>Adaptation by Klaas Neyens</h3>
+    <p align="center">
+        <a href="https://www.linkedin.com/in/klaas-neyens/"><img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555"/></a>
+    </p>
 </div>
 
-Personnal project of a web app that reproduce the stock market on anything, with a price variation depending on the sale volume. This web app is entirely local, and requires no installation.
+Personal project of a web app that reproduce the stock market on anything, with a price variation depending on the sale volume. This web app is entirely local, and requires no installation.
 
 # Let the party begin !
 

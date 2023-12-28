@@ -42,7 +42,7 @@ body .conteneur{
     font-size: 1.1em;
 }
 #cheapest .hashtag_prix {
-    font-size: 60px;
+    font-size: 40px;
     font-weight: 600;
     color: #30ff70;
     font-family: sans-serif;
@@ -70,7 +70,7 @@ body .conteneur{
 #afficheur_prix tr[growth="negative"] .indice, #afficheur_prix tr[growth="negative"] .prix, #afficheur_prix tr[growth="negative"] .croissance {color : rgb(202, 58, 58);}
 
 #afficheur_prix tr .prix {
-    font-weight: 700;
+    font-weight: 900;
 }
 
 #afficheur_prix th.cercle, #afficheur_prix th.indice, #afficheur_prix th.prix, #afficheur_prix th.croissance {

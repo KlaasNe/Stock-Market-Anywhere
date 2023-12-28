@@ -1,4 +1,4 @@
-// const minuterie_display_new_curve = new Minuterie(20, display_new_curve)
+const minuterie_display_new_curve = new Minuterie(20, display_new_curve)
 const prices_listener = new ChangeListener("prices");
 const new_sale_listener = new ChangeListener("new_sale")
 let prices_history
@@ -17,7 +17,7 @@ function init(){
 }
 
 setInterval(() => {
-    // minuterie_display_new_curve.check()
+    minuterie_display_new_curve.check()
 
     if (prices_listener.check()) {
         prices_history = prices_listener.value["prices_history"]
@@ -33,7 +33,12 @@ setInterval(() => {
 
 setInterval(() => {
     if (new_sale_listener.check()) {
-        new_sale_animation(new_sale_listener.value[0], new_sale_listener.value[1])
+        const sales = new_sale_listener.value
+        for (const [_, data] of Object.entries(sales)) {
+            console.log(data[0], data[1])
+            console.log(data[2])
+            for (let i = 0; i < data[2]; i++) new_sale_animation(data[0], data[1])
+        }
     }
 }, 30)
 

@@ -8,7 +8,7 @@ class SaleButton{
         this.number_of_sales = 0
     }
 
-    html(){
+    html() {
         let button = document.createElement('div');
 		button.id = this.trigram;
 		button.className = "drink";

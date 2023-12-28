@@ -138,8 +138,9 @@ function display_new_curve(){
     chart.update()
 }
 
-function nbr_of_point_to_display(){
-    return (minutes_for_points_history * 60) / indexes.refresh_period
+function nbr_of_point_to_display() {
+	return 30
+    // return (minutes_for_points_history * 60) / indexes.refresh_period
 }
 
 var next_index_to_display = 0
