@@ -32,7 +32,7 @@ class Sales{
     }
 
     between(start, end){
-        if(this.sales.length == 0){return []}
+        if(this.sales.length === 0){return []}
 
         let i_start = 0
         while(this.sales[i_start][1] < start){i_start++}
@@ -44,7 +44,7 @@ class Sales{
     }
 
     since(since){
-        if(this.sales.length == 0){return []}
+        if(this.sales.length === 0){return []}
 
         let i = this.sales.length
         while(i > 1 && this.sales[i-1][1] > since){i --}

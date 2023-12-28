@@ -1,9 +1,9 @@
-var minuterie_display_new_curve = new Minuterie(20, display_new_curve)
-var prices_listener = new ChangeListener("prices")
-var new_sale_listener = new ChangeListener("new_sale")
-var prices_history
-var indexes
-var is_krach
+// const minuterie_display_new_curve = new Minuterie(20, display_new_curve)
+const prices_listener = new ChangeListener("prices");
+const new_sale_listener = new ChangeListener("new_sale")
+let prices_history
+let indexes
+let is_krach
 init()
 
 function init(){
@@ -17,9 +17,9 @@ function init(){
 }
 
 setInterval(() => {
-    minuterie_display_new_curve.check()
+    // minuterie_display_new_curve.check()
 
-    if(prices_listener.check()){
+    if (prices_listener.check()) {
         prices_history = prices_listener.value["prices_history"]
         indexes = data_get_information("indexes")
         is_krach = data_get_information("is_krach")
@@ -32,7 +32,7 @@ setInterval(() => {
 }, 500)
 
 setInterval(() => {
-    if(new_sale_listener.check()){
+    if (new_sale_listener.check()) {
         new_sale_animation(new_sale_listener.value[0], new_sale_listener.value[1])
     }
 }, 30)

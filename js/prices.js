@@ -75,15 +75,13 @@ class Prices{
     crash(){
         let crash_prices = {}
         for(let drink in default_prices){
-            crash_prices[drink] = default_prices[drink]["krach_price"]
+            crash_prices[drink] = default_prices[drink]["crash_price"]
         }
 
         return crash_prices
     }
 
     price_variation(new_sales, former_prices, milliseconds_since_last_update){
-        // TODO FIX THIS SO IT'S NOT TIME DEPENDANT BUT PER SALE
-        // compte le nombre total de boissons vendues sur l'intervalle de temps.
         let total_sales = new_sales.length
     
         let sales_per_drink = new Sales().cumulative_sales(new_sales)
@@ -100,9 +98,8 @@ class Prices{
         // tend to amplification's value when total_sales goes to infinity
         // those points are then shared between the drinks
         let max_var_per_sale = (Math.atan(total_sales/10) / (Math.PI/2) * this.amplification)
-        let max_var = max_var_per_sale * milliseconds_since_last_update / 1000 / 60
         for(let drink in centered_sales){
-            centered_sales[drink] = centered_sales[drink] * max_var
+            centered_sales[drink] = centered_sales[drink] * max_var_per_sale
         }
     
         return centered_sales

@@ -13,7 +13,7 @@ document.getElementsByTagName("html")[0].appendChild(general_style)
 
 function new_sale_animation(colour, price){
     let animation_duration = range(Math.random(), 0, 1, 3, 10)
-    let scale = range(parseFloat(price), 0, 5, 0.7, 1.3)
+    let scale = range(parseFloat(price) * 2, 0, 5, 0.7, 1.3)
 
     let animation_name_key = Math.random().toString().slice(2)
     let x_anim = animation_keyframe_creator("x", animation_name_key, 15, 130)

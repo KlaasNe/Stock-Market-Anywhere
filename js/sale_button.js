@@ -9,14 +9,14 @@ class SaleButton{
     }
 
     html(){
-        let bouton = document.createElement('div');
-		bouton.id = this.trigram;
-		bouton.className = "drink";
-		bouton.setAttribute("trigram", this.trigram)
-		bouton.setAttribute("actual_price", this.actual_price)
-		bouton.setAttribute("disabled", "")
+        let button = document.createElement('div');
+		button.id = this.trigram;
+		button.className = "drink";
+		button.setAttribute("trigram", this.trigram)
+		button.setAttribute("actual_price", this.actual_price)
+		button.setAttribute("disabled", "")
 
-		bouton.innerHTML = 
+		button.innerHTML =
 			"<div class='name'><span class='trigram'>" + this.trigram + "</span> &#x2022; <span class='full_name'>" + this.fullname + "</span></div>" +
 			"<div class='infos'><div class='prices'>" +
 			"<span class='actual_price'>€" + this.actual_price + "</span>" +
@@ -27,9 +27,9 @@ class SaleButton{
 			"<div class='add_sale' style='background-color:" + this.colour + "'>0</div>" +
 			"</div>"
 
-        this.dom = bouton
+        this.dom = button
 
-        return bouton
+        return button
     }
 
     update_dom(new_price){
@@ -38,7 +38,7 @@ class SaleButton{
         this.actual_price = new_price
         el.setAttribute("actual_price", this.actual_price)
 
-        el.querySelector('.actual_price').innerHTML = round(new_price, 2) + "€"
+        el.querySelector('.actual_price').innerHTML =  "€" + round(new_price, 2)
 
         let variation = round((new_price / this.initial_price - 1) * 100, 1)
         let variation_sign

@@ -107,12 +107,13 @@ html.active_krach #krach {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    grid-gap: 15px;
     max-width: 1200px;
+    grid-gap: 15px;
     margin-left:auto;
     margin-right:auto;
     padding-bottom: 30px;
 }
+
 .drink {
     padding: 10px;
     border-radius: 10px;
