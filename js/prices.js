@@ -72,17 +72,16 @@ class Prices{
         this.number_of_drinks = Object.keys(default_normal_prices).length
     }
 
-    krach(){
-        let krach_prices = {}
+    crash(){
+        let crash_prices = {}
         for(let drink in default_prices){
-            krach_prices[drink] = default_prices[drink]["krach_price"]
+            crash_prices[drink] = default_prices[drink]["crash_price"]
         }
 
-        return krach_prices
+        return crash_prices
     }
 
     price_variation(new_sales, former_prices, milliseconds_since_last_update){
-        // compte le nombre total de boissons vendues sur l'intervalle de temps.
         let total_sales = new_sales.length
     
         let sales_per_drink = new Sales().cumulative_sales(new_sales)
@@ -98,10 +97,9 @@ class Prices{
     
         // tend to amplification's value when total_sales goes to infinity
         // those points are then shared between the drinks
-        let max_var_per_minute = (Math.atan(total_sales/10) / (Math.PI/2) * this.amplification)
-        let max_var = max_var_per_minute * milliseconds_since_last_update / 1000 / 60
+        let max_var_per_sale = (Math.atan(total_sales/10) / (Math.PI/2) * this.amplification)
         for(let drink in centered_sales){
-            centered_sales[drink] = centered_sales[drink] * max_var
+            centered_sales[drink] = centered_sales[drink] * max_var_per_sale
         }
     
         return centered_sales
@@ -137,7 +135,7 @@ class Prices{
 
         let last_prices = {}
         for(let drink in this.prices_history){
-            if(this.prices_history[drink].length == number_of_indexes){ // take only drinks that are still updated
+            if(this.prices_history[drink].length === number_of_indexes){ // take only drinks that are still updated
                 last_prices[drink] = this.prices_history[drink][number_of_indexes - 1]
             }
         }

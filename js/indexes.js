@@ -21,18 +21,18 @@ class Indexes{
         return str_csv
     }
 
-    is_time_for_next(){
-        return this.time_until_next() < 0
-    }
-
-    time_until_next(){
-        let milliseconds_remaining = this.last()[0] + this.refresh_period * 1000 - Date.now()
-        return Math.ceil(milliseconds_remaining / 1000)
-    }
+    // is_time_for_next(){
+    //     return this.time_until_next() < 0
+    // }
+    //
+    // time_until_next(){
+    //     let milliseconds_remaining = this.last()[0] + this.refresh_period * 1000 - Date.now()
+    //     return Math.ceil(milliseconds_remaining / 1000)
+    // }
 
     new(set_krach = null){
         if(this.party_index.length > 0){
-            if(this.ongoing() == true){
+            if(this.ongoing() === true){
                 this.end()
             }
             if(set_krach === null){

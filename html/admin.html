@@ -1,6 +1,11 @@
 <link href="../css/admin.css" rel="stylesheet">
 
-<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Admin</title>
+</head>
+
+<html lang="">
 	<body>
 		<div id="what_to_do_with_data" class="choices_buttons big_buttons" style="display: none;">
 			<h1>You seem to have a party going...</h1>
@@ -69,22 +74,25 @@
 					Krach
 				</div>
 			</div>
-			<div id="drinks">
-				<template>
-					<div class="drink" id="trigram">
-						<div class="name"><span class="trigram">MAR</span> - aux canards dans l'étang</div>
-						<div class="infos">
-							<div class="prices">
-								<span class="actual_price">3€45</span>
-								<div>
-									<div class="initial_price">2€32</div>
-									<div class="variation">+24%</div>
+			<div class="center">
+				<div id="drinks">
+					<template>
+						<div class="drink" id="trigram">
+							<div class="name"><span class="trigram">MAR</span> - aux canards dans l'étang</div>
+							<div class="infos">
+								<div class="prices">
+									<span class="actual_price">3€45</span>
+									<div>
+										<div class="initial_price">2€32</div>
+										<div class="variation">+24%</div>
+									</div>
 								</div>
+								<div class="add_sale">+1</div>
 							</div>
-							<div class="add_sale">+1</div>
 						</div>
-					</div>
-				</template>
+					</template>
+				</div>
+				<button onclick="submit_new_sales()">Confirm</button>
 			</div>
 		</div>
 		<div id="parametres" style="display: none;" class="big_buttons">
