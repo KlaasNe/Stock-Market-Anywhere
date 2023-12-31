@@ -224,3 +224,20 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .rounded {
     border-radius: .25rem;
 }
+
+.submit-drinks {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.submit-drinks {
+    background-image: linear-gradient(193deg, rgb(49, 233, 129) 0%, rgb(98, 130, 183) 100%);
+    color: white;
+    border: none;
+}
