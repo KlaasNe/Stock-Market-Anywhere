@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <link href="../css/admin.css" rel="stylesheet">
+</head>
+
+
+<body style="margin:0" class="dark">
+<div class="center">
+    <div class="container-center">
+        <div style="width: 100%">
+            <h1>
+                Settings
+            </h1>
+        </div>
+        <div>
+            <label for="euro">€</label>
+            <input type="radio" id="euro" name="currency">
+            <label for="usd">$</label>
+            <input type="radio" id="usd" name="currency">
+            <label for="pound">£</label>
+            <input type="radio" id="pound" name="currency">
+        </div>
+        <div id="items">
+            <span>
+                <label for="product">Product</label>
+                <input type="text" id="product" placeholder="Type here...">
+                <label for="price">Price</label>
+                <input type="number" id="price" placeholder="1.23" step="0.01">
+                <button onclick="add_product()">+</button>
+            </span>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script src="../js/settings.js"></script>

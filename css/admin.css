@@ -55,6 +55,7 @@ a {
     font-size: large;
     padding: 14px 26px;
     border-radius: 12px;
+    border: none;
 }
 
 .parametre input {
@@ -240,4 +241,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     background-image: linear-gradient(193deg, rgb(49, 233, 129) 0%, rgb(98, 130, 183) 100%);
     color: white;
     border: none;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.container-center {
+    max-width: 1200px;
 }
