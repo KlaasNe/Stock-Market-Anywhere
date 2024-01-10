@@ -88,13 +88,13 @@ function generate_price_display(){
 	let tableau = document.querySelector('#afficheur_prix tbody');
 
 	for(let trigram in default_prices){
-		tableau.innerHTML += 
+		tableau.innerHTML +=
 			"<tr class='prix_" + trigram + "'>" +
-				"<td class='color-indicator-table' style='color:" + default_prices[trigram]["colour"] + "'>&#11044;</td>" +
+				"<td class='color-indicator-table' style='color:" + default_prices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
 				"<td>" + default_prices[trigram]["full_name"] + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
 				"<td class='prix'>" + last_prices[trigram] + " &euro;</td>" +
-				"<td class='croissance'>0 %</td>" +
+				"<td class='croissance' style='border-top-right-radius: .5rem; border-bottom-right-radius: .5rem;'>0 %</td>" +
 			"</tr>"
 	}
 }
