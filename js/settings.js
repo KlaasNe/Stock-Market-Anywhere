@@ -49,18 +49,15 @@ function make_trigram(name, maxNumberChars = 3) {
     if (stripped_name.length <= maxNumberChars) {
         return stripped_name.toUpperCase()
     }
+
     const nameParts = name.toUpperCase().split(' ').filter(n => n)
-    if (nameParts[0].length <= 2 && nameParts.length !== maxNumberChars) {
-        nameParts[0] = nameParts[0] + nameParts[1]
-        nameParts.splice(1, 1)
+    if (nameParts.length === 1) {
+        return name.substring(0, maxNumberChars).toUpperCase()
     }
-    const partsCount = nameParts.length
-    const partsCountCapped = Math.min(maxNumberChars, partsCount)
-    let trigram = nameParts[0].substring(0, maxNumberChars - (partsCountCapped - 1))
-    for (let i = 1; i < partsCountCapped; i++) {
-        trigram += nameParts[i].substring(0, 1)
-    }
-    return trigram
+
+    let trigram = name.substring(0, maxNumberChars - (Math.min(nameParts.length, maxNumberChars) - 1)).toUpperCase()
+    const additionalChars = nameParts.slice(1, maxNumberChars).map(part => part.substring(0, 1))
+    return trigram + additionalChars.join('')
 }
 
 function update_name(trigram) {
