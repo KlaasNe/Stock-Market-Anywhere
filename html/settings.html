@@ -17,35 +17,40 @@
         </div>
         <div class="">
             <label for="euro">€</label>
-            <input type="radio" id="euro" name="currency" checked>
+            <input type="radio" id="euro" name="currency" onclick="setCurrency('€')" checked>
             <label for="usd">$</label>
-            <input type="radio" id="usd" name="currency">
+            <input type="radio" id="usd" name="currency" onclick="setCurrency('$')">
             <label for="pound">£</label>
-            <input type="radio" id="pound" name="currency">
+            <input type="radio" id="pound" name="currency" onclick="setCurrency('£')">
+            <label for="yen">¥</label>
+            <input type="radio" id="yen" name="currency" onclick="setCurrency('¥')">
         </div>
         <div>
             <table style="width: 100%; margin-bottom: 1rem;">
                 <thead>
-                    <tr>
-                        <td>Trigram</td>
-                        <td>Name</td>
-                        <td>Price</td>
-                        <td>Minimum price</td>
-                    </tr>
+                <tr>
+                    <td><strong>Trigram</strong></td>
+                    <td><strong>Name</strong></td>
+                    <td><strong>Price</strong></td>
+                    <td><strong>Minimum price</strong></td>
+                    <td></td>
+                </tr>
                 </thead>
                 <tbody id="items">
 
                 </tbody>
             </table>
-            <span>
-                <label for="product" hidden>Product</label>
-                <input type="text" id="product" placeholder="Name">
-                <label for="price" hidden>Price</label>
-                <input type="number" id="price" placeholder="Price" step="0.01">
-                <label for="min-price" hidden>Minimum price</label>
-                <input type="number" id="min-price" placeholder="Minimum price" step="0.01">
-                <button onclick="add_product()">+</button>
-            </span>
+            <form id="add-item">
+                <span>
+                    <label for="product" hidden>Product</label>
+                    <input type="text" id="product" placeholder="Name" required>
+                    <label for="price" hidden>Price</label>
+                    <input type="number" id="price" placeholder="Price" min="0" step="0.01" required>
+                    <label for="min-price" hidden>Minimum price</label>
+                    <input type="number" id="min-price" placeholder="Minimum price" min="0" step="0.01">
+                    <button type="submit">+</button>
+                </span>
+            </form>
         </div>
     </div>
 </div>

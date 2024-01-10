@@ -1,18 +1,39 @@
 const prices = {}
-const currency = ""
+let currency = "€"
+
+document.getElementById("add-item").addEventListener("submit", (event) => {
+    event.preventDefault();
+    add_product();
+});
 
 function add_product() {
+    const errors = []
     const product_name = document.getElementById("product").value
-    const price = document.getElementById("price").value
-    const min_price = document.getElementById("min-price").value
     const trigram = make_trigram(product_name);
-    prices[trigram] = {
-        "initial_price": price,
-        "crash_price": min_price,
-        "min_price": min_price,
-        "full_name": product_name
-    };
-    append_new_item_html(trigram, prices[trigram]);
+    if (prices.hasOwnProperty(trigram)) {
+        errors.push("An item with this abbreviation already exists")
+    }
+    const price = document.getElementById("price").value
+    if (price.value === "") {
+        errors.push("Item has no price")
+    }
+    if (errors.length === 0) {
+        let min_price = document.getElementById("min-price").value;
+        min_price = min_price !== "" ? min_price : 0;
+        prices[trigram] = {
+            "initial_price": price,
+            "crash_price": min_price,
+            "min_price": min_price,
+            "full_name": product_name
+        }
+        append_new_item_html(trigram, prices[trigram]);
+        product_name.value = ""
+        price.value = ""
+        min_price.value = ""
+        product_name.focus()  // TODO MAKE THIS WORK
+    } else {
+        // TODO Show error popup
+    }
 }
 
 function make_trigram(name, maxNumberChars = 3) {
@@ -35,18 +56,27 @@ function append_new_item_html(trigram, item_params) {
     const items_table = document.getElementById("items")
     items_table.innerHTML += `<tr id="${trigram}">` +
         "<td>" + trigram + "</td>" +
-        "<td>" + `<input type="text" value="${item_params.full_name}"/>` + "</td>" +
-        "<td>" + "€" + `<input type="text" value="${item_params.initial_price}"/>` + "</td>" +  // TODO Make currency variable
-        "<td>" + "€" + `<input type="text" value="${item_params.min_price}"/>` + "</td>"+
-        `<td><button onclick="delete_trigram(${trigram})">delete</button></td>` +
+        "<td>" + `<input type="text" value="${item_params.full_name}" required/>` + "</td>" +
+        "<td>" + `${currency}` + `<input type="number" value="${item_params.initial_price}" min="0" step="0.01"/>` + "</td>" +  // TODO Make currency variable
+        "<td>" + `${currency}` + `<input type="number" value="${item_params.min_price}" min="0" step="0.01"/>` + "</td>" +
+        `<td><button onclick="delete_trigram('${trigram}')">delete</button></td>` +
         "</tr>"
 }
 
-function delete_trigram(htmlItem) {
-    delete prices.trigram
-    htmlItem.remove()
+function delete_trigram(trigram) {
+    prices.delete(trigram)
+    document.getElementById(trigram).remove()
 }
 
 function generate_items_html() {
-    return null
+    const items_table = document.getElementById("items")
+    items_table.innerHTML = ""
+    for (const trigram in prices) {
+        append_new_item_html(trigram, prices[trigram])
+    }
+}
+
+function setCurrency(character) {
+    currency = character
+    generate_items_html()
 }
