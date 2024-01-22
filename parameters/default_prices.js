@@ -1,7 +1,7 @@
 const default_prices = {
     "ste" : {"initial_price" : 1.5, "crash_price" : 0.7, "min_price" : 0.4, "full_name":"Stella"},
     "bar" : {"initial_price" : 2.0, "crash_price" : 1.1, "min_price" : 1.0, "full_name":"Barbar"},
-    "cho" : {"initial_price" : 2.0, "crash_price" : 1.12, "min_price" : 0.8, "full_name":"Chouffe"},
+    "cho" : {"initial_price" : 2.0, "crash_price" : 1.1, "min_price" : 0.8, "full_name":"Chouffe"},
     "duv" : {"initial_price" : 1.5, "crash_price" : 0.8, "min_price" : 0.4, "full_name":"Duvel"},
     "trk" : {"initial_price" : 2.0, "crash_price" : 1.1, "min_price" : 0.9, "full_name":"Triple K"},
     "kwk" : {"initial_price" : 2.0, "crash_price" : 1.1, "full_name":"Kwak"},
@@ -17,14 +17,4 @@ const default_prices = {
     "cor" : {"initial_price" : 2.0, "crash_price" : 0.7, "full_name":"Corona"},
     "pin" : {"initial_price" : 1.5, "crash_price" : 0.8, "full_name":"Pinte Sangria"},
     "Pbe" : {"initial_price" : 3, "crash_price" : 1.4, "full_name":"Bête (Pinte)"},
-}
-
-title = "Beurscafé (wtf zo cool B^) )"
-
-compteur = 0
-number_of_drinks =  Object.keys(default_prices).length + 1
-for (let i in default_prices) {
-    if (!default_prices[i]["colour"]) {
-        default_prices[i]["colour"] = "hsl(" + Math.ceil(compteur++ * 360 / number_of_drinks) + ", 90%, 60%)";
-    }
 }

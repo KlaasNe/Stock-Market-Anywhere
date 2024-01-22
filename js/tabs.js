@@ -2,16 +2,24 @@ what_to_do_with_data = document.getElementById("what_to_do_with_data")
 start_the_party = document.getElementById("start_the_party")
 stock_market = document.getElementById("stock_market")
 scheduler = document.getElementById("scheduler")
-parametres = document.getElementById("parametres")
+parametres = document.getElementById("parameters")
 
 function tabs_to_display(){
-    if(has_data()){
+    if (has_data()) {
         what_to_do_with_data.style.display = "flex"
     } else {
         start_the_party.style.display = "flex"
     }
 }
+
 tabs_to_display()
+
+window.onload = () => {
+    console.log(window.localStorage.getItem("title"));
+    if (window.localStorage.getItem("title")) {
+        go_to_start();
+    }
+}
 
 function go_to_start(){
     start_the_party.style.display = "flex"
@@ -107,7 +115,7 @@ function extract_value_from_schedule(){
 
     let datetime_start = date_start.value +"T"+ time_start.value +":00"
 
-    if(datetime_start.length == 19){
+    if (datetime_start.length === 19) {
         datetime_start = Date.parse(datetime_start)
     } else {
         datetime_start = ""

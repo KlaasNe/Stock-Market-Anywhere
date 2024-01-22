@@ -1,4 +1,3 @@
-// default_prices is "imported" from the admin.html file
 // Sales is "imported" from the admin.html file
 
 class Prices{
@@ -20,6 +19,8 @@ class Prices{
         this.amplification = json_object.amplification
         if("number_of_drinks" in json_object){
             this.number_of_drinks = json_object.number_of_drinks
+        } else {
+            this.number_of_drinks = Object.keys(defaultPrices).length;
         }
     }
 
@@ -56,8 +57,8 @@ class Prices{
 
     default(){
         let default_normal_prices = {}
-        for(let drink in default_prices){
-            default_normal_prices[drink] = default_prices[drink]["initial_price"]
+        for(let drink in defaultPrices){
+            default_normal_prices[drink] = defaultPrices[drink]["initial_price"]
         }
 
         return default_normal_prices
@@ -74,8 +75,8 @@ class Prices{
 
     crash(){
         let crash_prices = {}
-        for(let drink in default_prices){
-            crash_prices[drink] = default_prices[drink]["crash_price"]
+        for(let drink in defaultPrices){
+            crash_prices[drink] = defaultPrices[drink]["crash_price"]
         }
 
         return crash_prices

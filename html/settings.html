@@ -6,7 +6,6 @@
     <link href="../css/admin.css" rel="stylesheet">
 </head>
 
-
 <body style="margin:0" class="dark">
 <div class="center">
     <div class="container-center">
@@ -15,7 +14,13 @@
                 Settings
             </h1>
         </div>
-        <div class="">
+
+        <div>
+            <label for="title-input">Title</label>
+            <input type="text" id="title-input" placeholder="Name of the event" oninput="updateTitle()">
+        </div>
+
+        <div>
             <label for="euro">€</label>
             <input type="radio" id="euro" name="currency" onclick="setCurrency('€')" checked>
             <label for="usd">$</label>
@@ -25,8 +30,9 @@
             <label for="yen">¥</label>
             <input type="radio" id="yen" name="currency" onclick="setCurrency('¥')">
         </div>
+
         <div>
-            <table style="width: 100%; margin-bottom: 1rem;">
+            <table style="width: 100%;">
                 <thead>
                 <tr>
                     <td><strong>Trigram</strong></td>
@@ -40,6 +46,12 @@
 
                 </tbody>
             </table>
+
+            <span>
+                <button onclick="saveAs()">Save template</button>
+                <button onclick="openFile()">Load</button>
+            </span>
+
             <form id="add-item">
                 <span>
                     <label for="product" hidden>Product</label>
@@ -52,6 +64,7 @@
                 </span>
             </form>
         </div>
+        <button onclick="launch()">Launch</button>
     </div>
 </div>
 </body>
