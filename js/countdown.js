@@ -58,7 +58,7 @@ class Countdown{
     
 }
 
-class Minuterie{
+class Minuterie {
     constructor(period, onValid = ()=>{}){
         this.period = period
 

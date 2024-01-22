@@ -22,7 +22,7 @@ body .conteneur{
     height:90px;
     box-sizing: border-box;
 }
-#titre {
+#title-input {
     font-size: 45px;
     font-weight: 700;
     margin-left: 25px;
@@ -64,7 +64,9 @@ body .conteneur{
 #afficheur_prix th {
     width:33%;
 }
-#afficheur_prix tr:nth-child(even) {background: rgba(255,255,255,0.06);}
+#afficheur_prix tr:nth-child(even) {
+    background: rgba(255,255,255,0.06);
+}
 
 #afficheur_prix tr[growth="positive"] .indice, #afficheur_prix tr[growth="positive"] .prix, #afficheur_prix tr[growth="positive"] .croissance {color : rgb(60, 151, 60);}
 #afficheur_prix tr[growth="negative"] .indice, #afficheur_prix tr[growth="negative"] .prix, #afficheur_prix tr[growth="negative"] .croissance {color : rgb(202, 58, 58);}
@@ -83,5 +85,16 @@ body .conteneur{
 }
 
 .rounded {
-    border-radius: .5rem;
+    border-radius: .5rem !important;
+}
+
+.border {
+    border: 2px white;
+}
+
+.nom {
+    text-align: left;
+}
+.color-indicator-table {
+    padding-left: 1rem;
 }

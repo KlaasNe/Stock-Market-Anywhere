@@ -2,9 +2,9 @@ const prices = new Prices()
 refresh_period = 2
 const indexes = new Indexes(refresh_period)
 const sales = new Sales()
+let defaultPrices = JSON.parse(localStorage.getItem('defaultPrices'));
 
 const sales_queue = []
-
 
 function start_from_nothing(){
     indexes.new(false)
@@ -45,12 +45,12 @@ function submit_new_sales(set_krach = null){
         const trigram = sales_queue[i]
         const actual_price = sale_buttons[trigram].actual_price
         sales_data[trigram] = [
-            default_prices[trigram]["colour"],
+            defaultPrices[trigram]["colour"],
             actual_price,
             sales_data[trigram] ? sales_data[trigram][2] + 1 : 1
         ]
         sales.new(trigram, actual_price)
-        // new_sale_animation(default_prices[trigram]["colour"], actual_price)
+        // new_sale_animation(defaultPrices[trigram]["colour"], actual_price)
     }
     data_upload("new_sale", sales_data)
     sales_queue.splice(0, sales_queue.length)
@@ -65,7 +65,7 @@ function submit_new_sales(set_krach = null){
         new_sales_start = indexes.last_non_krach_party_index()[0]
         new_sales = sales.since(new_sales_start)
     
-        new_prices = prices.compute_new_prices(new_sales, indexes, default_prices)
+        new_prices = prices.compute_new_prices(new_sales, indexes, defaultPrices)
         prices.append(new_prices)
     }
 
@@ -85,10 +85,10 @@ function update_sales(new_price){
 // build up the admin interface
 const el_drinks = document.getElementById("drinks");
 const sale_buttons = {}
-for (let trigram in default_prices) {
-	const full_name = default_prices[trigram]["full_name"]
-	const initial_price = default_prices[trigram]["initial_price"]
-	const colour = default_prices[trigram]["colour"]
+for (let trigram in defaultPrices) {
+	const full_name = defaultPrices[trigram]["full_name"]
+	const initial_price = defaultPrices[trigram]["initial_price"]
+	const colour = defaultPrices[trigram]["colour"]
 
 	let button = new SaleButton(trigram, full_name, initial_price, colour)
 	sale_buttons[trigram] = button

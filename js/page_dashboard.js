@@ -1,12 +1,13 @@
-const minuterie_display_new_curve = new Minuterie(20, display_new_curve)
 const prices_listener = new ChangeListener("prices");
-const new_sale_listener = new ChangeListener("new_sale")
-let prices_history
-let indexes
-let is_krach
+const new_sale_listener = new ChangeListener("new_sale");
+let prices_history;
+let indexes;
+let is_krach;
+
 init()
 
 function init(){
+    document.getElementById("title-input").innerHTML = title;
     prices_listener.check()
     prices_history = prices_listener.value["prices_history"]
     indexes = data_get_information("indexes")
@@ -17,8 +18,6 @@ function init(){
 }
 
 setInterval(() => {
-    minuterie_display_new_curve.check()
-
     if (prices_listener.check()) {
         prices_history = prices_listener.value["prices_history"]
         indexes = data_get_information("indexes")
@@ -32,11 +31,12 @@ setInterval(() => {
 }, 500)
 
 setInterval(() => {
+    if (chart.getNbrCurveMissing() > 1) // No idea why this doesn't work for >0
+        display_new_curve()
+
     if (new_sale_listener.check()) {
         const sales = new_sale_listener.value
         for (const [_, data] of Object.entries(sales)) {
-            console.log(data[0], data[1])
-            console.log(data[2])
             for (let i = 0; i < data[2]; i++) new_sale_animation(data[0], data[1])
         }
     }
@@ -75,9 +75,11 @@ function update_cheapest(){
     });
       
 	cheapest = cheapest.splice(0,3)
-	for(let i=0; i < 3; i++){
-        let trigram = cheapest[i][0]
-		document.querySelector("#cheapest .indice#numero_" + (i+1)).innerHTML = default_prices[trigram]["full_name"];
+	for (let i=0; i < 3; i++) {
+        try {
+            let trigram = cheapest[i][0];
+            document.querySelector("#cheapest .indice#numero_" + (i+1)).innerHTML = defaultPrices[trigram]["full_name"];
+        } catch (ignored) {}
 	}
 }
 
@@ -85,14 +87,14 @@ function generate_price_display(){
     let last_prices = get_last_prices()
 	let tableau = document.querySelector('#afficheur_prix tbody');
 
-	for(let trigram in default_prices){
-		tableau.innerHTML += 
+	for(let trigram in defaultPrices){
+		tableau.innerHTML +=
 			"<tr class='prix_" + trigram + "'>" +
-				"<td style='color:" + default_prices[trigram]["colour"] + "'>&#11044;</td>" +
-				"<td>" + default_prices[trigram]["full_name"] + "</td>" +
+				"<td class='color-indicator-table' style='color:" + defaultPrices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
+				"<td>" + defaultPrices[trigram]["full_name"] + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
 				"<td class='prix'>" + last_prices[trigram] + " &euro;</td>" +
-				"<td class='croissance'>0 %</td>" +
+				"<td class='croissance' style='border-top-right-radius: .5rem; border-bottom-right-radius: .5rem;'>0 %</td>" +
 			"</tr>"
 	}
 }
@@ -101,7 +103,7 @@ function update_prices_table(){
     let last_prices = get_last_prices()
     let variation = get_variation()
 
-	for(let trigram in default_prices){
+	for (let trigram in defaultPrices) {
 		let trigram_el =  document.querySelector('#afficheur_prix .prix_' + trigram);
 		let trigram_el_price = trigram_el.querySelector('.prix');
 		let trigram_el_variation = trigram_el.querySelector('.croissance');
