@@ -1,6 +1,5 @@
 const prices = new Prices()
-refresh_period = 2
-const indexes = new Indexes(refresh_period)
+const indexes = new Indexes(8) // OOOOHHHH MAGIC NUMBER (it doesn't do anything in this version)
 const sales = new Sales()
 let defaultPrices = JSON.parse(localStorage.getItem('defaultPrices'));
 
@@ -40,34 +39,40 @@ function init(){
 
 
 function submit_new_sales(set_krach = null){
-    const sales_data = {}
+    const sales_data = {};
     for (const i in sales_queue) {
-        const trigram = sales_queue[i]
-        const actual_price = sale_buttons[trigram].actual_price
+        const trigram = sales_queue[i];
+        const actual_price = sale_buttons[trigram].actual_price;
         sales_data[trigram] = [
             defaultPrices[trigram]["colour"],
             actual_price,
             sales_data[trigram] ? sales_data[trigram][2] + 1 : 1
-        ]
-        sales.new(trigram, actual_price)
+        ];
+        sales.new(trigram, actual_price);
         // new_sale_animation(defaultPrices[trigram]["colour"], actual_price)
     }
-    data_upload("new_sale", sales_data)
-    sales_queue.splice(0, sales_queue.length)
+    data_upload("new_sale", sales_data);
 
     indexes.end()
     indexes.new(set_krach)
 
-    if(indexes.is_krach()){
+    if (indexes.is_krach()) {
         krach_prices = prices.crash()
         prices.append(krach_prices)
     } else {
-        new_sales_start = indexes.last_non_krach_party_index()[0]
-        new_sales = sales.since(new_sales_start)
+        // new_sales_start = indexes.last_non_krach_party_index()[0]
+        // new_sales = sales.since(new_sales_start)
+        new_sales = [];
+        const sale_time = Date.now();
+        sales_queue.forEach(trigram => {
+            new_sales.push([trigram, sale_time, sale_buttons[trigram].actual_price]);
+        });
     
         new_prices = prices.compute_new_prices(new_sales, indexes, defaultPrices)
         prices.append(new_prices)
     }
+
+    sales_queue.splice(0, sales_queue.length);
 
     data_upload("sales", sales)
     data_upload("indexes", indexes)
@@ -77,7 +82,7 @@ function submit_new_sales(set_krach = null){
 }
 
 function update_sales(new_price){
-	for(let drink in new_price){
+	for (let drink in new_price) {
 		sale_buttons[drink].update_dom(new_price[drink])
 	}
 }

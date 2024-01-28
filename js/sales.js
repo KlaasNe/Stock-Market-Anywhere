@@ -44,24 +44,23 @@ class Sales{
     }
 
     since(since){
-        if(this.sales.length === 0){return []}
+        if (this.sales.length === 0) {
+            return [];
+        }
 
         let i = this.sales.length
-        while(i > 1 && this.sales[i-1][1] > since){i --}
+        while(i > 1 && this.sales[i - 1][1] > since) {
+            i--;
+        }
 
         return this.sales.slice(i)
     }
 
     cumulative_sales(sales_extract){
-        let sales_per_drink = {}
-        for(let sale in sales_extract){
-            let drink_trigram = sales_extract[sale][0]
-    
-            if(drink_trigram in sales_per_drink){
-                sales_per_drink[drink_trigram] += 1
-            } else {
-                sales_per_drink[drink_trigram] = 1
-            }
+        let sales_per_drink = {};
+        for (let sale in sales_extract) {
+            let drink_trigram = sales_extract[sale][0];
+            sales_per_drink[drink_trigram] = (sales_per_drink[drink_trigram] || 0) + 1;
         }
 
         // sales_per_drink = {
@@ -69,6 +68,6 @@ class Sales{
         //     "bar": 1,
         //     "plo": 1
         // }
-        return sales_per_drink
+        return sales_per_drink;
     }
 }

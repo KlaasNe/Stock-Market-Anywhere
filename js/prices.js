@@ -1,6 +1,6 @@
 // Sales is "imported" from the admin.html file
 
-class Prices{
+class Prices {
     prices_history = {}
     // prices_history structure :
     // {
@@ -84,11 +84,11 @@ class Prices{
 
     price_variation(new_sales, former_prices, milliseconds_since_last_update){
         let total_sales = new_sales.length
-    
+
         let sales_per_drink = new Sales().cumulative_sales(new_sales)
-        for(let drink in former_prices){
-            if(!(drink in sales_per_drink)){
-                sales_per_drink[drink] = 0
+        for (let drink in former_prices) {
+            if (!(drink in sales_per_drink)) {
+                sales_per_drink[drink] = 0;
             }
         }
     
@@ -98,10 +98,12 @@ class Prices{
     
         // tend to amplification's value when total_sales goes to infinity
         // those points are then shared between the drinks
-        let max_var_per_sale = (Math.atan(total_sales/10) / (Math.PI/2) * this.amplification)
-        for(let drink in centered_sales){
-            centered_sales[drink] = centered_sales[drink] * max_var_per_sale
+        let max_var_per_sale = ((Math.atan(total_sales/10) / (Math.PI/2)) * this.amplification);
+        for (let drink in centered_sales) {
+            centered_sales[drink] = centered_sales[drink] * max_var_per_sale;
         }
+
+        // TODO make something that if the total price of all drinks goes below the sum of the inital values of drinks that it redistributes this difference over the cheapest drinks
     
         return centered_sales
     }
@@ -110,7 +112,7 @@ class Prices{
         max = Math.max(max, 1);
     
         let centered_sales = {}
-        for(let drink in sales_per_drink){
+        for (let drink in sales_per_drink) {
             centered_sales[drink] = (sales_per_drink[drink] - average) / max
         }
     
@@ -122,8 +124,8 @@ class Prices{
         let last_non_krach_index = indexes.last_non_krach_index()
 
         let last_non_krach = {}
-        for(let drink in this.prices_history){
-            if(this.prices_history[drink].length == number_of_completed_indexes){ // take only drinks that are still updated
+        for (let drink in this.prices_history) {
+            if (this.prices_history[drink].length === number_of_completed_indexes) { // take only drinks that are still updated
                 last_non_krach[drink] = this.prices_history[drink][last_non_krach_index]
             }
         }
@@ -145,27 +147,27 @@ class Prices{
     }
     
     compute_new_prices(new_sales, indexes, default_prices){
-        let last_non_krach_party_index = indexes.last_non_krach_party_index()
-        let milliseconds_since_last_update = Date.now() - last_non_krach_party_index[0]
+        let last_non_krach_party_index = indexes.last_non_krach_party_index();
+        let milliseconds_since_last_update = Date.now() - last_non_krach_party_index[0];
         
-        let former_prices = this.last_non_krach(indexes)
+        let former_prices = this.last_non_krach(indexes);
 
-        let price_var = this.price_variation(new_sales, former_prices, milliseconds_since_last_update)
+        let price_var = this.price_variation(new_sales, former_prices, milliseconds_since_last_update);
     
-        let new_prices = {}
-        for(let drink in this.prices_history){
-            let min_price = 0
-            if("min_price" in default_prices[drink]){
-                min_price = default_prices[drink]["min_price"]
+        let new_prices = {};
+        for (let drink in this.prices_history) {
+            let min_price = 0;
+            if ("min_price" in default_prices[drink]) {
+                min_price = default_prices[drink]["min_price"];
             }
-            
-            new_prices[drink] = round(Math.max(
-                                    (former_prices[drink]
-                                    * (1 + price_var[drink] / 100))
-                                    , min_price
-                                ), 2)
+            const new_price = Math.max(
+                (former_prices[drink]
+                    * (1 + price_var[drink] / 100))
+                , min_price
+            );
+            new_prices[drink] = round(new_price, 2);
         }
     
-        return new_prices
+        return new_prices;
     }
 }

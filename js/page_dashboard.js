@@ -1,5 +1,7 @@
 const prices_listener = new ChangeListener("prices");
 const new_sale_listener = new ChangeListener("new_sale");
+const title = localStorage.getItem("event-title");
+const CURRENCY = localStorage.getItem("currency");
 let prices_history;
 let indexes;
 let is_krach;
@@ -84,18 +86,18 @@ function update_cheapest(){
 }
 
 function generate_price_display(){
-    let last_prices = get_last_prices()
+    let last_prices = get_last_prices();
 	let tableau = document.querySelector('#afficheur_prix tbody');
 
-	for(let trigram in defaultPrices){
+	for (let trigram in defaultPrices) {
 		tableau.innerHTML +=
 			"<tr class='prix_" + trigram + "'>" +
 				"<td class='color-indicator-table' style='color:" + defaultPrices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
 				"<td>" + defaultPrices[trigram]["full_name"] + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
-				"<td class='prix'>" + last_prices[trigram] + " &euro;</td>" +
+				`<td class='prix'> ${CURRENCY} ${last_prices[trigram]}</td>` +
 				"<td class='croissance' style='border-top-right-radius: .5rem; border-bottom-right-radius: .5rem;'>0 %</td>" +
-			"</tr>"
+			"</tr>";
 	}
 }
 
@@ -108,7 +110,7 @@ function update_prices_table(){
 		let trigram_el_price = trigram_el.querySelector('.prix');
 		let trigram_el_variation = trigram_el.querySelector('.croissance');
 
-		trigram_el_price.innerText = last_prices[trigram] + " €"
+		trigram_el_price.innerText = `${CURRENCY} ` + last_prices[trigram]
 
         let variation_sign
         variation[trigram] > 0 ? variation_sign = "+" : variation_sign = ""
