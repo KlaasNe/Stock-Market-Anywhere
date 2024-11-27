@@ -1,6 +1,6 @@
 html {
     background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgb(26, 40, 49) 0.3%, rgb(9,15,22) 90.2% );
-    font-family: system-ui;
+    font-family: "Roboto", system-ui;
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -9,7 +9,7 @@ html.active_krach {
     background-image: radial-gradient( circle farthest-corner at -4% -12.9%,  rgb(76, 33, 33) 0.3%, rgb(45, 18, 18) 90.2% );
 }
 .conteneur {
-    padding : 20px;
+    padding: 20px;
     border-radius: 12px;
 }
 body .conteneur{
@@ -18,9 +18,10 @@ body .conteneur{
 
 #banniere {
     display: flex;
-    width:100%;
-    height:90px;
+    align-items: center;
+    width: 100%;
     box-sizing: border-box;
+    padding: 5px;
 }
 #title-input {
     font-size: 45px;
@@ -32,7 +33,6 @@ body .conteneur{
 #cheapest {
     align-self: center;
     width:100%;
-    margin-right:20px;
     text-align: right;
 }
 #cheapest .vertical {
@@ -42,7 +42,7 @@ body .conteneur{
     font-size: 1.1em;
 }
 #cheapest .hashtag_prix {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 600;
     color: #30ff70;
     font-family: sans-serif;
@@ -50,7 +50,7 @@ body .conteneur{
     margin-right:5px;
 }
 #cheapest .indice {
-    font-size: 25px;
+    font-size: 30px;
     font-family: sans-serif;
     margin-right:10px;
 }
@@ -80,8 +80,20 @@ body .conteneur{
     margin-right:2px;
 }
 
-#afficheur_prix td.indice, #afficheur_prix td.prix, #afficheur_prix td.croissance {
-    text-align: center;
+#afficheur_prix th.nom, #afficheur_prix th.indice {
+    text-align: left;
+}
+
+#afficheur_prix th.prix, #afficheur_prix th.croissance {
+    text-align: right;
+}
+
+#afficheur_prix td.prix, #afficheur_prix td.croissance {
+    text-align: right;
+}
+
+#afficheur_prix td.indice, #afficheur_prix td.prix {
+    font-family: "Roboto Mono", system-ui;
 }
 
 .rounded {

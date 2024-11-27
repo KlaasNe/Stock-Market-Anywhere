@@ -84,6 +84,17 @@ function update_cheapest(){
 	}
 }
 
+function format_currency(price, max_price) {
+    let num_string_parts = price.toString().split(".");
+    if (num_string_parts.length < 2) {
+        num_string_parts.push("00")
+    } else if (num_string_parts.at(1).length < 2) {
+        num_string_parts[1] = num_string_parts.at(1) + "0"
+    }
+    return num_string_parts.join(".");
+
+}
+
 function generate_price_display(){
     let last_prices = get_last_prices();
 	let tableau = document.querySelector('#afficheur_prix tbody');
@@ -94,7 +105,7 @@ function generate_price_display(){
 				"<td class='color-indicator-table' style='color:" + defaultPrices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
 				"<td>" + defaultPrices[trigram]["full_name"] + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
-				`<td class='prix'> ${CURRENCY} ${last_prices[trigram]}</td>` +
+				`<td class='prix' style='display: flex; justify-content: end; gap: 8px;'><span>${CURRENCY}</span><span>${format_currency(last_prices[trigram])}</span></td>` +
 				"<td class='croissance' style='border-top-right-radius: .5rem; border-bottom-right-radius: .5rem;'>0 %</td>" +
 			"</tr>";
 	}
