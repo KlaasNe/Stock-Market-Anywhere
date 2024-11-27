@@ -46,8 +46,8 @@ class Prices {
     }
 
     append(prices_dict){
-        for(let drink in this.prices_history){
-            if(drink in prices_dict){
+        for(let drink in this.prices_history) {
+            if(drink in prices_dict) {
                 this.prices_history[drink].push(prices_dict[drink])
             }
         }
@@ -82,7 +82,7 @@ class Prices {
         return crash_prices
     }
 
-    price_variation(new_sales, former_prices, milliseconds_since_last_update){
+    price_variation(new_sales, former_prices){
         let total_sales = new_sales.length
 
         let sales_per_drink = new Sales().cumulative_sales(new_sales)
@@ -114,6 +114,7 @@ class Prices {
         let centered_sales = {}
         for (let drink in sales_per_drink) {
             centered_sales[drink] = (sales_per_drink[drink] - average) / max
+            console.log("centered sale: ", (sales_per_drink[drink] - average) / max )
         }
     
         return centered_sales
@@ -123,10 +124,13 @@ class Prices {
         let number_of_completed_indexes = indexes.party_index.length - 1
         let last_non_krach_index = indexes.last_non_krach_index()
 
+
         let last_non_krach = {}
         for (let drink in this.prices_history) {
             if (this.prices_history[drink].length === number_of_completed_indexes) { // take only drinks that are still updated
                 last_non_krach[drink] = this.prices_history[drink][last_non_krach_index]
+            } else {
+                console.warn(`This drink is no longer being updated:\n\tdrink: ${drink}\n\tindexes.party_index.length: ${indexes.party_index.length}\n\tprices_history[drink].length: ${this.prices_history[drink].length}\n\tindexes.prices_history: ${indexes.party_index}`)
             }
         }
 
@@ -147,12 +151,8 @@ class Prices {
     }
     
     compute_new_prices(new_sales, indexes, default_prices){
-        let last_non_krach_party_index = indexes.last_non_krach_party_index();
-        let milliseconds_since_last_update = Date.now() - last_non_krach_party_index[0];
-        
         let former_prices = this.last_non_krach(indexes);
-
-        let price_var = this.price_variation(new_sales, former_prices, milliseconds_since_last_update);
+        let price_var = this.price_variation(new_sales, former_prices);
     
         let new_prices = {};
         for (let drink in this.prices_history) {

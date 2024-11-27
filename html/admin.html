@@ -1,118 +1,131 @@
 <head>
-	<meta charset="UTF-8">
-	<title>Admin</title>
-	<link href="../css/admin.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link href="../css/admin.css" rel="stylesheet">
 </head>
 
 <html lang="">
-	<body>
-		<div id="what_to_do_with_data" class="choices_buttons big_buttons" style="display: none;">
-			<h1>You seem to have a party going...</h1>
-			<div class="multiple_buttons_container">
-				<div id="resume" class="zoom gradient_div" style="background-image: linear-gradient( 111.1deg, rgba(0,40,70,1) -4.8%, rgb(115 228 255) 82.7%, rgb(123 255 183) 97.2% );">
-					<h2>Resume the party</h2>
-					<p>So much fun right now, I want it to never stop.</p>
-				</div>
-				<div id="download" class="zoom gradient_div" style="background-image: linear-gradient( 18deg, rgba(0,40,70,1) -4.8%, rgb(115 228 255) 82.7%, rgb(123 255 183) 97.2% );">
-					<h2>Download data</h2>
-					<p>oh, you data scientist. Gotcha, you can create your best data viz with every data point.</p>
-				</div>
-				<div id="reset" class="zoom gradient_div" style="background-image: linear-gradient( 264deg, rgb(4, 55, 94) -4.8%, rgb(83, 209, 241) 88.7%, rgb(123, 255, 242) 98.2% );">
-					<h2>Reset</h2>
-					<p>Sometimes, you need to go back to a clean board to achieve beter. Good luck !</p>
-				</div>
-			</div>
-		</div>
-		<div id="start_the_party" class="choices_buttons big_buttons" style="display: none;">
-			<div class="multiple_buttons_container">
-				<div id="schedule_start" class="zoom gradient_div" style="background-image: linear-gradient( 237deg,  rgb(0 40 70) -4.8%, rgb(255 115 115 / 52%) 72.7%, rgba(255,175,123,1) 100% )">
-					<h2>Schedule the party</h2>
-					<p>You want to have a beautiful countdown? This is the way!</p>
-				</div>
-				<div id="start_now" class="zoom gradient_div" style="background-image: linear-gradient( 111.1deg,  rgba(0,40,70,1) -4.8%, rgba(255,115,115,1) 82.7%, rgba(255,175,123,1) 97.2% );">
-					<h2>Start now!</h2>
-					<p>You seem to be in a hurry... Let the party begin!</p>
-				</div>
-			</div>
-		</div>
-		<div id="scheduler" class="scheduler_settings big_buttons" style="display: none;">
-			<h1>Setup the countdown</h1>
-			<div class="multiple_buttons_container">
-				<div id="schedule_start" class="gradient_div" style="background-image: linear-gradient(41deg, #5a5ca3  0%, #ed8ad2 100%);">
-					<h2>Start</h2>
-					<input type="date" class="datepicker-input" required>
-					<p></p>
-					<input type="time" class="datepicker-input" required>
-					<p></p>
-					<script>
-						document.querySelector("#schedule_start input[type=date]").valueAsDate = new Date();
-					</script>
-				</div>
-				<div id="schedule_message" class="gradient_div" style="background-image: linear-gradient(336deg, #7560a7 0%, #df6cbe 100%); height:fit-content;">
-					<h2>Message</h2>
-					<input type="text">
-					<p></p>
-				</div>
-			</div>
-			<div style="margin-top: 40px;">
-				<div id="validate_schedule" class="gradient_button" style="background-image: linear-gradient(193deg, #775ca9 0%, #ed8ad2 100%);">
-					Validate
-				</div>
-			</div>
-		</div>
-		<div id="stock_market" style="display: none;">
-			<div id="top_line">
-				<div id="party_info">
-					<div>new prices in <span id="remaining_time_til_new_prices"></span></div>
-				</div>
-				<div id="button_parametres" hidden>
-					<div>Parametres</div>
-				</div>
-				<div id="krach">
-					Krach
-				</div>
-			</div>
-			<div class="container">
-				<div id="drinks">
-					<template>
-						<div class="drink" id="trigram">
-							<div class="name"><span class="trigram">MAR</span> - aux canards dans l'étang</div>
-							<div class="infos">
-								<div class="prices">
-									<span class="actual_price">3€45</span>
-									<div>
-										<div class="initial_price">2€32</div>
-										<div class="variation">+24%</div>
-									</div>
-								</div>
-								<div class="add_sale">+1</div>
-							</div>
-						</div>
-					</template>
-				</div>
-				<button class="submit-drinks gradient_button" onclick="submit_new_sales()">Confirm</button>
-			</div>
-		</div>
-		<div id="parametres" style="display: none;" class="big_buttons">
-			<div class="multiple_buttons_container">
-				<div class="parametre gradient_div" style="background-image: linear-gradient(240deg, #ff823c 0%, #ffc94c 100%);">
-					<h2>Refresh period</h2>
-					<input type="number" id="parametre_refresh_period" value=""/>
-					<p>Compute new prices every n seconds.</p>
-				</div>
-				<div class="parametre gradient_div" style="background-image: linear-gradient(99deg, #ff823c 0%, #ffc94c 100%);">
-					<h2>Prices variation amplification</h2>
-					<input type="number" id="parametre_prices_var_amp" value="">
-					<p>Handles the price variation amplification.</p>
-				</div>
-			</div>
-			<div style="margin-top: 40px;">
-				<div id="validate_parametres" class="gradient_button" style="background-image: linear-gradient(193deg, #ff823c 0%, #ffc94c 100%);">
-					Validate
-				</div>
-			</div>
-		</div>
-	</body>
+<body>
+<div id="what_to_do_with_data" class="choices_buttons big_buttons" style="display: none;">
+    <h1>You seem to have a party going...</h1>
+    <div class="multiple_buttons_container">
+        <div id="resume" class="zoom gradient_div"
+             style="background-image: linear-gradient( 111.1deg, rgba(0,40,70,1) -4.8%, rgb(115 228 255) 82.7%, rgb(123 255 183) 97.2% );">
+            <h2>Resume the party</h2>
+            <p>So much fun right now, I want it to never stop.</p>
+        </div>
+        <div id="download" class="zoom gradient_div"
+             style="background-image: linear-gradient( 18deg, rgba(0,40,70,1) -4.8%, rgb(115 228 255) 82.7%, rgb(123 255 183) 97.2% );">
+            <h2>Download data</h2>
+            <p>oh, you data scientist. Gotcha, you can create your best data viz with every data point.</p>
+        </div>
+        <div id="reset" class="zoom gradient_div"
+             style="background-image: linear-gradient( 264deg, rgb(4, 55, 94) -4.8%, rgb(83, 209, 241) 88.7%, rgb(123, 255, 242) 98.2% );">
+            <h2>Reset</h2>
+            <p>Sometimes, you need to go back to a clean board to achieve beter. Good luck !</p>
+        </div>
+    </div>
+</div>
+<div id="start_the_party" class="choices_buttons big_buttons" style="display: none;">
+    <div class="multiple_buttons_container">
+        <div id="schedule_start" class="zoom gradient_div"
+             style="background-image: linear-gradient( 237deg,  rgb(0 40 70) -4.8%, rgb(255 115 115 / 52%) 72.7%, rgba(255,175,123,1) 100% )">
+            <h2>Schedule the party</h2>
+            <p>You want to have a beautiful countdown? This is the way!</p>
+        </div>
+        <div id="start_now" class="zoom gradient_div"
+             style="background-image: linear-gradient( 111.1deg,  rgba(0,40,70,1) -4.8%, rgba(255,115,115,1) 82.7%, rgba(255,175,123,1) 97.2% );">
+            <h2>Start now!</h2>
+            <p>You seem to be in a hurry... Let the party begin!</p>
+        </div>
+    </div>
+</div>
+<div id="scheduler" class="scheduler_settings big_buttons" style="display: none;">
+    <h1>Setup the countdown</h1>
+    <div class="multiple_buttons_container">
+        <div id="schedule_start" class="gradient_div"
+             style="background-image: linear-gradient(41deg, #5a5ca3  0%, #ed8ad2 100%);">
+            <h2>Start</h2>
+            <input type="date" class="datepicker-input" required>
+            <p></p>
+            <input type="time" class="datepicker-input" required>
+            <p></p>
+            <script>
+                document.querySelector("#schedule_start input[type=date]").valueAsDate = new Date();
+            </script>
+        </div>
+        <div id="schedule_message" class="gradient_div"
+             style="background-image: linear-gradient(336deg, #7560a7 0%, #df6cbe 100%); height:fit-content;">
+            <h2>Message</h2>
+            <input type="text">
+            <p></p>
+        </div>
+    </div>
+    <div style="margin-top: 40px;">
+        <div id="validate_schedule" class="gradient_button"
+             style="background-image: linear-gradient(193deg, #775ca9 0%, #ed8ad2 100%);">
+            Validate
+        </div>
+    </div>
+</div>
+<div id="stock_market" style="display: none;">
+    <div id="top_line">
+        <div id="bump-prices">
+            <span>Bump prices 10%</span>
+        </div>
+        <!--				<div id="party_info">-->
+        <!--					<div>new prices in <span id="remaining_time_til_new_prices"></span></div>-->
+        <!--				</div>-->
+        <div id="button_parametres" hidden>
+            <div>Parametres</div>
+        </div>
+        <div id="krach">
+            Crash
+        </div>
+    </div>
+    <div class="container">
+        <div id="drinks">
+            <template>
+                <div class="drink" id="trigram">
+                    <div class="name"><span class="trigram">MAR</span> - aux canards dans l'étang</div>
+                    <div class="infos">
+                        <div class="prices">
+                            <span class="actual_price">3€45</span>
+                            <div>
+                                <div class="initial_price">2€32</div>
+                                <div class="variation">+24%</div>
+                            </div>
+                        </div>
+                        <div class="add_sale">+1</div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <button class="submit-drinks gradient_button" onclick="submit_new_sales()">Confirm</button>
+    </div>
+</div>
+<div id="parametres" style="display: none;" class="big_buttons">
+    <div class="multiple_buttons_container">
+        <div class="parametre gradient_div"
+             style="background-image: linear-gradient(240deg, #ff823c 0%, #ffc94c 100%);">
+            <h2>Refresh period</h2>
+            <input type="number" id="parametre_refresh_period" value=""/>
+            <p>Compute new prices every n seconds.</p>
+        </div>
+        <div class="parametre gradient_div" style="background-image: linear-gradient(99deg, #ff823c 0%, #ffc94c 100%);">
+            <h2>Prices variation amplification</h2>
+            <input type="number" id="parametre_prices_var_amp" value="">
+            <p>Handles the price variation amplification.</p>
+        </div>
+    </div>
+    <div style="margin-top: 40px;">
+        <div id="validate_parametres" class="gradient_button"
+             style="background-image: linear-gradient(193deg, #ff823c 0%, #ffc94c 100%);">
+            Validate
+        </div>
+    </div>
+</div>
+</body>
 </html>
 
 <script src="../js/data.js"></script>

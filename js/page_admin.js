@@ -5,21 +5,21 @@ let defaultPrices = JSON.parse(localStorage.getItem('defaultPrices'));
 
 const sales_queue = []
 
-function start_from_nothing(){
+function start_from_nothing() {
     indexes.new(false)
     prices.set_default()
 
     init()
 }
 
-function reload(){
+function reload() {
     indexes.load(data_get_information("indexes"))
     prices.load(data_get_information("prices"))
     sales.load(data_get_information("sales"))
 }
 
-function init(){
-    for(let trigram in sale_buttons){
+function init() {
+    for (let trigram in sale_buttons) {
         sale_buttons[trigram].dom.removeAttribute("disabled")
     }
 
@@ -37,8 +37,7 @@ function init(){
 }
 
 
-
-function submit_new_sales(set_krach = null){
+function submit_new_sales(set_krach = null) {
     const sales_data = {};
     for (const i in sales_queue) {
         const trigram = sales_queue[i];
@@ -67,8 +66,9 @@ function submit_new_sales(set_krach = null){
         sales_queue.forEach(trigram => {
             new_sales.push([trigram, sale_time, sale_buttons[trigram].actual_price]);
         });
-    
-        new_prices = prices.compute_new_prices(new_sales, indexes, defaultPrices)
+
+        const new_prices = prices.compute_new_prices(new_sales, indexes, defaultPrices)
+        console.log("new prices: ", new_prices);
         prices.append(new_prices)
     }
 
@@ -81,44 +81,44 @@ function submit_new_sales(set_krach = null){
     update_sales(prices.last(indexes))
 }
 
-function update_sales(new_price){
-	for (let drink in new_price) {
-		sale_buttons[drink].update_dom(new_price[drink])
-	}
+function update_sales(new_prices) {
+    for (let drink in new_prices) {
+        sale_buttons[drink].update_dom(new_prices[drink]);
+    }
 }
 
 // build up the admin interface
 const el_drinks = document.getElementById("drinks");
 const sale_buttons = {}
 for (let trigram in defaultPrices) {
-	const full_name = defaultPrices[trigram]["full_name"]
-	const initial_price = defaultPrices[trigram]["initial_price"]
-	const colour = defaultPrices[trigram]["colour"]
+    const full_name = defaultPrices[trigram]["full_name"]
+    const initial_price = defaultPrices[trigram]["initial_price"]
+    const colour = defaultPrices[trigram]["colour"]
 
-	let button = new SaleButton(trigram, full_name, initial_price, colour)
-	sale_buttons[trigram] = button
+    let button = new SaleButton(trigram, full_name, initial_price, colour)
+    sale_buttons[trigram] = button
 
-	el_drinks.appendChild(button.html())
+    el_drinks.appendChild(button.html())
 }
 
 for (let trigram in sale_buttons) {
     let executed_hold = false
-    sale_buttons[trigram].dom.addEventListener('click', function() {
+    sale_buttons[trigram].dom.addEventListener('click', function () {
         if (!executed_hold) {
             sales_queue.push(trigram)
             sale_buttons[trigram].add_counter()
         }
         executed_hold = false
-	})
+    })
 
-    sale_buttons[trigram].dom.addEventListener('contextmenu', function(event) {
+    sale_buttons[trigram].dom.addEventListener('contextmenu', function (event) {
         event.preventDefault()
         const item_index = sales_queue.indexOf(trigram)
         sales_queue.splice(item_index, 1)
         sale_buttons[trigram].add_counter(-1)
     })
 
-    sale_buttons[trigram].dom.addEventListener('mousedown', function(event) {
+    sale_buttons[trigram].dom.addEventListener('mousedown', function (event) {
         if (event.button === 0) {
             const time_out = setTimeout(() => {
                 executed_hold = true
@@ -142,11 +142,32 @@ for (let trigram in sale_buttons) {
 html_el = document.getElementsByTagName("html")[0]
 krach_button = document.getElementById("krach")
 krach_button.addEventListener('click', () => {
-    if(indexes.is_krach()){
+    if (indexes.is_krach()) {
         submit_new_sales(false)
         html_el.classList.remove("active_krach")
     } else {
         submit_new_sales(true)
         html_el.classList.add("active_krach")
     }
-})
+});
+
+bump_prices_button = document.getElementById("bump-prices");
+bump_prices_button.addEventListener('click', () => {
+    if (!indexes.is_krach()) {
+        const bumped_prices = {};
+        for (let trigram in sale_buttons) {
+            const sale_button = sale_buttons[trigram];
+            bumped_prices[trigram] = roundNumber(sale_button.actual_price * 1.1, 2);
+            defaultPrices[trigram]["initial_price"] = roundNumber(defaultPrices[trigram]["initial_price"] * 1.1, 2);
+        }
+        indexes.end()
+        indexes.new(false)
+        prices.append(bumped_prices);
+        console.log("prices: ", prices)
+        update_sales(bumped_prices);
+    }
+});
+
+function roundNumber(num, digits) {
+    return +num.toFixed(digits);
+}
