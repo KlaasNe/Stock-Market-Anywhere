@@ -9,7 +9,7 @@ class Prices {
     //      "plo": [0.62, 0.45, 0.2],
     // }
 
-    constructor(amplification = 100) {
+    constructor(amplification = 600) {
         this.amplification = amplification
         document.getElementById("parametre_prices_var_amp").value = amplification
     }
