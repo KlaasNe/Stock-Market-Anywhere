@@ -68,7 +68,6 @@ function submit_new_sales(set_krach = null) {
         });
 
         const new_prices = prices.compute_new_prices(new_sales, indexes, defaultPrices)
-        console.log("new prices: ", new_prices);
         prices.append(new_prices)
     }
 
@@ -163,7 +162,6 @@ bump_prices_button.addEventListener('click', () => {
         indexes.end()
         indexes.new(false)
         prices.append(bumped_prices);
-        console.log("prices: ", prices)
         update_sales(bumped_prices);
     }
 });

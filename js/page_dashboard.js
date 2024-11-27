@@ -57,9 +57,8 @@ function get_variation(){
     let variation = {}
 
     let last_prices = get_last_prices()
-    let last_last_prices = get_last_prices(-2)
-    for(trigram in prices_history){
-        variation[trigram] = last_prices[trigram] / last_last_prices[trigram]
+    for(trigram in prices_history) {
+        variation[trigram] = last_prices[trigram] / prices_history[trigram][0]
         variation[trigram] = round((variation[trigram] - 1) * 100, 2)
     }
 

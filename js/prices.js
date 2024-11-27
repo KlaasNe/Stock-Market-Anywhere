@@ -9,34 +9,36 @@ class Prices {
     //      "plo": [0.62, 0.45, 0.2],
     // }
 
-    constructor(amplification = 100){
+    constructor(amplification = 100) {
         this.amplification = amplification
         document.getElementById("parametre_prices_var_amp").value = amplification
     }
-    
-    load(json_object){
+
+    load(json_object) {
         this.prices_history = json_object.prices_history
         this.amplification = json_object.amplification
-        if("number_of_drinks" in json_object){
+        if ("number_of_drinks" in json_object) {
             this.number_of_drinks = json_object.number_of_drinks
         } else {
             this.number_of_drinks = Object.keys(defaultPrices).length;
         }
     }
 
-    toCSV(){
+    toCSV() {
         let trigrams = Object.keys(this.prices_history)
         let str_csv = "index," + trigrams.join(",") + "\n"
 
         let max_length = 0
-        for(let i in trigrams){
+        for (let i in trigrams) {
             max_length = Math.max(this.prices_history[trigrams[i]].length, max_length)
         }
-        for(let i = 0; i < max_length; i++){
+        for (let i = 0; i < max_length; i++) {
             let prices = [i]
-            for(let ii in trigrams){
+            for (let ii in trigrams) {
                 let value = this.prices_history[trigrams[ii]].at(i)
-                if(value === undefined){value = ""}
+                if (value === undefined) {
+                    value = ""
+                }
                 prices.push(value)
             }
             str_csv += prices.join(",") + "\n"
@@ -45,9 +47,9 @@ class Prices {
         return str_csv
     }
 
-    append(prices_dict){
-        for(let drink in this.prices_history) {
-            if(drink in prices_dict) {
+    append(prices_dict) {
+        for (let drink in this.prices_history) {
+            if (drink in prices_dict) {
                 this.prices_history[drink].push(prices_dict[drink])
             }
         }
@@ -55,34 +57,34 @@ class Prices {
         return this
     }
 
-    default(){
+    default() {
         let default_normal_prices = {}
-        for(let drink in defaultPrices){
+        for (let drink in defaultPrices) {
             default_normal_prices[drink] = defaultPrices[drink]["initial_price"]
         }
 
         return default_normal_prices
     }
 
-    set_default(){
+    set_default() {
         let default_normal_prices = this.default()
 
-        for(let drink in default_normal_prices){
+        for (let drink in default_normal_prices) {
             this.prices_history[drink] = [default_normal_prices[drink]]
         }
         this.number_of_drinks = Object.keys(default_normal_prices).length
     }
 
-    crash(){
+    crash() {
         let crash_prices = {}
-        for(let drink in defaultPrices){
+        for (let drink in defaultPrices) {
             crash_prices[drink] = defaultPrices[drink]["crash_price"]
         }
 
         return crash_prices
     }
 
-    price_variation(new_sales, former_prices){
+    price_variation(new_sales, former_prices) {
         let total_sales = new_sales.length
 
         let sales_per_drink = new Sales().cumulative_sales(new_sales)
@@ -91,36 +93,35 @@ class Prices {
                 sales_per_drink[drink] = 0;
             }
         }
-    
+
         let average_sales = total_sales / this.number_of_drinks
         let maximum = Math.max(...Object.values(sales_per_drink));
         let centered_sales = this.center_sales(sales_per_drink, average_sales, maximum)
-    
+
         // tend to amplification's value when total_sales goes to infinity
         // those points are then shared between the drinks
-        let max_var_per_sale = ((Math.atan(total_sales/10) / (Math.PI/2)) * this.amplification);
+        let max_var_per_sale = ((Math.atan(total_sales / 10) / (Math.PI / 2)) * this.amplification);
         for (let drink in centered_sales) {
             centered_sales[drink] = centered_sales[drink] * max_var_per_sale;
         }
 
         // TODO make something that if the total price of all drinks goes below the sum of the inital values of drinks that it redistributes this difference over the cheapest drinks
-    
-        return centered_sales
-    }
-    
-    center_sales(sales_per_drink, average, max){
-        max = Math.max(max, 1);
-    
-        let centered_sales = {}
-        for (let drink in sales_per_drink) {
-            centered_sales[drink] = (sales_per_drink[drink] - average) / max
-            console.log("centered sale: ", (sales_per_drink[drink] - average) / max )
-        }
-    
+
         return centered_sales
     }
 
-    last_non_krach(indexes){
+    center_sales(sales_per_drink, average, max) {
+        max = Math.max(max, 1);
+
+        let centered_sales = {}
+        for (let drink in sales_per_drink) {
+            centered_sales[drink] = (sales_per_drink[drink] - average) / max
+        }
+
+        return centered_sales
+    }
+
+    last_non_krach(indexes) {
         let number_of_completed_indexes = indexes.party_index.length - 1
         let last_non_krach_index = indexes.last_non_krach_index()
 
@@ -137,23 +138,23 @@ class Prices {
         return last_non_krach
     }
 
-    last(indexes){
+    last(indexes) {
         let number_of_indexes = indexes.party_index.length
 
         let last_prices = {}
-        for(let drink in this.prices_history){
-            if(this.prices_history[drink].length === number_of_indexes){ // take only drinks that are still updated
+        for (let drink in this.prices_history) {
+            if (this.prices_history[drink].length === number_of_indexes) { // take only drinks that are still updated
                 last_prices[drink] = this.prices_history[drink][number_of_indexes - 1]
             }
         }
 
         return last_prices
     }
-    
-    compute_new_prices(new_sales, indexes, default_prices){
+
+    compute_new_prices(new_sales, indexes, default_prices) {
         let former_prices = this.last_non_krach(indexes);
         let price_var = this.price_variation(new_sales, former_prices);
-    
+
         let new_prices = {};
         for (let drink in this.prices_history) {
             let min_price = 0;
@@ -167,7 +168,7 @@ class Prices {
             );
             new_prices[drink] = round(new_price, 2);
         }
-    
+
         return new_prices;
     }
 }

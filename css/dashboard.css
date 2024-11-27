@@ -68,8 +68,8 @@ body .conteneur{
     background: rgba(255,255,255,0.06);
 }
 
-#afficheur_prix tr[growth="positive"] .indice, #afficheur_prix tr[growth="positive"] .prix, #afficheur_prix tr[growth="positive"] .croissance {color : rgb(60, 151, 60);}
-#afficheur_prix tr[growth="negative"] .indice, #afficheur_prix tr[growth="negative"] .prix, #afficheur_prix tr[growth="negative"] .croissance {color : rgb(202, 58, 58);}
+#afficheur_prix tr[growth="positive"] .indice, #afficheur_prix tr[growth="positive"] .prix, #afficheur_prix tr[growth="positive"] .croissance {color : rgb(202, 58, 58);}
+#afficheur_prix tr[growth="negative"] .indice, #afficheur_prix tr[growth="negative"] .prix, #afficheur_prix tr[growth="negative"] .croissance {color : rgb(60, 151, 60);}
 
 #afficheur_prix tr .prix {
     font-weight: 900;
