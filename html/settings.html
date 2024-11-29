@@ -32,7 +32,7 @@
             <input type="radio" id="yen" name="currency" onclick="setCurrency('¥')">
         </div>
 
-        <div>
+        <div style="max-height: 400px; overflow-y: auto;">
             <table style="width: 100%;">
                 <thead>
                 <tr>
@@ -47,17 +47,18 @@
 
                 </tbody>
             </table>
+        </div>
 
-            <span>
+        <span>
                 <button onclick="saveAs()">Save template</button>
                 <button onclick="openFile()">Load</button>
             </span>
 
-            <div id="errors">
+        <div id="errors">
 
-            </div>
+        </div>
 
-            <form id="add-item" novalidate>
+        <form id="add-item" novalidate>
                 <span>
                     <label for="product" hidden>Product</label>
                     <input type="text" id="product" placeholder="Name" required>
@@ -67,8 +68,7 @@
                     <input type="number" id="min-price" placeholder="Minimum price" min="0" step="0.01">
                     <button type="submit">+</button>
                 </span>
-            </form>
-        </div>
+        </form>
         <button onclick="launch()">Launch</button>
     </div>
 </div>

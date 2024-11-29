@@ -33,7 +33,7 @@ body .conteneur{
 #cheapest {
     align-self: center;
     width:100%;
-    text-align: right;
+    text-align: left;
 }
 #cheapest .vertical {
     writing-mode: tb-rl;
@@ -42,15 +42,15 @@ body .conteneur{
     font-size: 1.1em;
 }
 #cheapest .hashtag_prix {
-    font-size: 30px;
+    font-size: 16px;
     font-weight: 600;
-    color: #30ff70;
+    color: #aeaeae;
     font-family: sans-serif;
-    margin-left:40px;
-    margin-right:5px;
+    margin-left:20px;
+    margin-right: 4px;
 }
 #cheapest .indice {
-    font-size: 30px;
+    font-size: 16px;
     font-family: sans-serif;
     margin-right:10px;
 }
@@ -68,8 +68,8 @@ body .conteneur{
     background: rgba(255,255,255,0.06);
 }
 
-#afficheur_prix tr[growth="positive"] .indice, #afficheur_prix tr[growth="positive"] .prix, #afficheur_prix tr[growth="positive"] .croissance {color : rgb(202, 58, 58);}
-#afficheur_prix tr[growth="negative"] .indice, #afficheur_prix tr[growth="negative"] .prix, #afficheur_prix tr[growth="negative"] .croissance {color : rgb(60, 151, 60);}
+#afficheur_prix tr[growth="positive"] .indice, #afficheur_prix tr[growth="positive"] .prix, #afficheur_prix tr[growth="positive"] .croissance {color : rgb(253, 103, 103);}
+#afficheur_prix tr[growth="negative"] .indice, #afficheur_prix tr[growth="negative"] .prix, #afficheur_prix tr[growth="negative"] .croissance {color : rgb(145, 253, 103);}
 
 #afficheur_prix tr .prix {
     font-weight: 900;
