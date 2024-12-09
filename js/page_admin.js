@@ -78,6 +78,8 @@ function update_sales(new_prices) {
     for (let drink in new_prices) {
         sale_buttons[drink].update_dom(new_prices[drink]);
     }
+
+    calculate_price()
 }
 
 // build up the admin interface
@@ -123,15 +125,19 @@ for (let trigram in sale_buttons) {
             }
             executed_hold = false
         }
+        calculate_price()
     })
 
     sale_buttons[trigram].dom.addEventListener('contextmenu', function (event) {
         event.preventDefault()
         if (!sale_buttons[trigram].dom.getAttribute("disabled")) {
             const item_index = sales_queue.indexOf(trigram)
-            sales_queue.splice(item_index, 1)
-            sale_buttons[trigram].add_counter(-1)
+            if (item_index >= 0) {
+                sales_queue.splice(item_index, 1)
+                sale_buttons[trigram].add_counter(-1)
+            }
         }
+        calculate_price()
     })
 
     sale_buttons[trigram].dom.addEventListener('mousedown', function (event) {
@@ -146,6 +152,7 @@ for (let trigram in sale_buttons) {
                 sale_buttons[trigram].dom.addEventListener('mouseup', function () {
                     clearTimeout(time_out)
                 })
+                calculate_price()
             }
         }
     })
@@ -187,4 +194,16 @@ bump_prices_button.addEventListener('click', () => {
 
 function roundNumber(num, digits) {
     return +num.toFixed(digits);
+}
+
+function calculate_price() {
+    let price = 0;
+    const calc = document.getElementById("calculator");
+
+    for (let i = 0; i < sales_queue.length; i++) {
+        const drink = sales_queue[i];
+        price += parseFloat(sale_buttons[drink].actual_price);
+    }
+
+    calc.innerText = `€${price.toFixed(2)}`;
 }
