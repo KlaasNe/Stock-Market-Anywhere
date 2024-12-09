@@ -261,3 +261,22 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 .container-center {
     max-width: 1200px;
 }
+
+.calculator {
+    position: absolute;
+    background: rgba(255, 255, 255, .15);
+    color: white;
+    bottom: 16px;
+    right: 16px;
+    padding: 16px;
+    font-size: 2rem;
+    border-radius: 8px;
+}
+
+{
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+}
