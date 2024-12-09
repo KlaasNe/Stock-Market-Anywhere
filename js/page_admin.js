@@ -104,8 +104,10 @@ function switch_sellability_state(trigram) {
     const item = document.getElementById(`sellability-${trigram}`);
     if (drinks_sellability[trigram]) {
         item.innerHTML = item.innerText
+        sale_buttons[trigram].dom.removeAttribute("disabled")
     } else {
         item.innerHTML = "<del>" + item.innerText + "</del>"
+        sale_buttons[trigram].dom.setAttribute("disabled", true)
     }
 
     data_upload("sellability-state", drinks_sellability);
@@ -114,31 +116,37 @@ function switch_sellability_state(trigram) {
 for (let trigram in sale_buttons) {
     let executed_hold = false
     sale_buttons[trigram].dom.addEventListener('click', function () {
-        if (!executed_hold) {
-            sales_queue.push(trigram)
-            sale_buttons[trigram].add_counter()
+        if (!sale_buttons[trigram].dom.getAttribute("disabled")) {
+            if (!executed_hold) {
+                sales_queue.push(trigram)
+                sale_buttons[trigram].add_counter()
+            }
+            executed_hold = false
         }
-        executed_hold = false
     })
 
     sale_buttons[trigram].dom.addEventListener('contextmenu', function (event) {
         event.preventDefault()
-        const item_index = sales_queue.indexOf(trigram)
-        sales_queue.splice(item_index, 1)
-        sale_buttons[trigram].add_counter(-1)
+        if (!sale_buttons[trigram].dom.getAttribute("disabled")) {
+            const item_index = sales_queue.indexOf(trigram)
+            sales_queue.splice(item_index, 1)
+            sale_buttons[trigram].add_counter(-1)
+        }
     })
 
     sale_buttons[trigram].dom.addEventListener('mousedown', function (event) {
-        if (event.button === 0) {
-            const time_out = setTimeout(() => {
-                executed_hold = true
-                for (let i = 0; i < 10; i++) sales_queue.push(trigram)
-                sale_buttons[trigram].add_counter(10)
-            }, 500)
+        if (!sale_buttons[trigram].dom.getAttribute("disabled")) {
+            if (event.button === 0) {
+                const time_out = setTimeout(() => {
+                    executed_hold = true
+                    for (let i = 0; i < 10; i++) sales_queue.push(trigram)
+                    sale_buttons[trigram].add_counter(10)
+                }, 500)
 
-            sale_buttons[trigram].dom.addEventListener('mouseup', function () {
-                clearTimeout(time_out)
-            })
+                sale_buttons[trigram].dom.addEventListener('mouseup', function () {
+                    clearTimeout(time_out)
+                })
+            }
         }
     })
 }

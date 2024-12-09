@@ -56,9 +56,11 @@ class SaleButton {
     }
 
     add_counter(number = 1){
-        this.number_of_sales += number
-        if (this.number_of_sales < 0) this.number_of_sales = 0
-        this.update_counter()
+        if (!this.dom.getAttribute("disabled")) {
+            this.number_of_sales += number
+            if (this.number_of_sales < 0) this.number_of_sales = 0
+            this.update_counter()
+        }
     }
 
     update_counter(){
