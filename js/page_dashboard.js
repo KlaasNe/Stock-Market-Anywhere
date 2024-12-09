@@ -1,10 +1,12 @@
 const prices_listener = new ChangeListener("prices");
 const new_sale_listener = new ChangeListener("new_sale");
+const sellability_listener = new ChangeListener("sellability-state");
 const title = localStorage.getItem("event-title");
 const CURRENCY = localStorage.getItem("currency");
 let prices_history;
 let indexes;
 let is_krach;
+let drinks_sellability;
 
 init()
 
@@ -42,6 +44,11 @@ setInterval(() => {
             for (let i = 0; i < data[2]; i++) new_sale_animation(data[0], data[1])
         }
     }
+
+    if (sellability_listener.check()) {
+        drinks_sellability = sellability_listener.value
+        generate_price_display()
+    }
 }, 30)
 
 function get_last_prices(index = -1){
@@ -74,7 +81,7 @@ function update_cheapest(){
     cheapest.sort(function(first, second) {
         return first[1] - second[1];
     });
-      
+
 	cheapest = cheapest.splice(0,3)
 	for (let i=0; i < 3; i++) {
         try {
@@ -95,17 +102,21 @@ function format_currency(price, max_price) {
 
 }
 
-function generate_price_display(){
+async function generate_price_display() {
     let last_prices = get_last_prices();
 	let tableau = document.querySelector('#afficheur_prix tbody');
 
+    const sellability = await sellability_listener.value
+
+    tableau.innerHTML = "";
 	for (let trigram in defaultPrices) {
+        const sold_out = !sellability[trigram];
 		tableau.innerHTML +=
 			"<tr class='prix_" + trigram + "'>" +
 				"<td class='color-indicator-table' style='color:" + defaultPrices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
-				"<td>" + defaultPrices[trigram]["full_name"] + "</td>" +
+				"<td>" + (sold_out ? `<del>${defaultPrices[trigram]["full_name"]}</del>` : `${defaultPrices[trigram]["full_name"]}`) + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
-				`<td class='prix' style='display: flex; justify-content: end; gap: 8px;'><span>${CURRENCY}</span><span>${format_currency(last_prices[trigram])}</span></td>` +
+				`<td class="${sold_out ? 'prix nfs' : 'prix'}" style='display: flex; justify-content: end; gap: 8px;'><span>${CURRENCY}</span><span>${format_currency(last_prices[trigram])}</span></td>` +
 				"<td class='croissance' style='border-top-right-radius: .5rem; border-bottom-right-radius: .5rem;'>0 %</td>" +
 			"</tr>";
 	}

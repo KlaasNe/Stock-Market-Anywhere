@@ -110,3 +110,7 @@ body .conteneur{
 .color-indicator-table {
     padding-left: 1rem;
 }
+
+.nfs {
+    color: dimgray;
+}

@@ -2,6 +2,7 @@ const prices = new Prices()
 const indexes = new Indexes(8) // OOOOHHHH MAGIC NUMBER (it doesn't do anything in this version)
 const sales = new Sales()
 let defaultPrices = JSON.parse(localStorage.getItem('defaultPrices'));
+const drinks_sellability = {}
 
 const sales_queue = []
 
@@ -21,15 +22,8 @@ function reload() {
 function init() {
     for (let trigram in sale_buttons) {
         sale_buttons[trigram].dom.removeAttribute("disabled")
+        drinks_sellability[trigram] = true
     }
-
-    // x = setInterval(() => {
-    //     if(indexes.is_time_for_next()){
-    //         new_sale()
-    //     }
-    //
-    //     update_countdown_new_price()
-    // }, (1000));
 
     data_upload("indexes", indexes)
     data_upload("prices", prices)
@@ -88,7 +82,9 @@ function update_sales(new_prices) {
 
 // build up the admin interface
 const el_drinks = document.getElementById("drinks");
+const drinks_for_sale = document.getElementById("sold-out");
 const sale_buttons = {}
+let generated_html = ""
 for (let trigram in defaultPrices) {
     const full_name = defaultPrices[trigram]["full_name"]
     const initial_price = defaultPrices[trigram]["initial_price"]
@@ -98,6 +94,21 @@ for (let trigram in defaultPrices) {
     sale_buttons[trigram] = button
 
     el_drinks.appendChild(button.html())
+    generated_html = generated_html.concat(`<div><input type="checkbox" onInput=switch_sellability_state('${trigram}') checked><span id="sellability-${trigram}">${full_name}</span></div>`)
+}
+drinks_for_sale.innerHTML = generated_html;
+
+function switch_sellability_state(trigram) {
+    drinks_sellability[trigram] = !drinks_sellability[trigram];
+
+    const item = document.getElementById(`sellability-${trigram}`);
+    if (drinks_sellability[trigram]) {
+        item.innerHTML = item.innerText
+    } else {
+        item.innerHTML = "<del>" + item.innerText + "</del>"
+    }
+
+    data_upload("sellability-state", drinks_sellability);
 }
 
 for (let trigram in sale_buttons) {
