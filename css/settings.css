@@ -1,0 +1,14 @@
+#errors {
+    display: grid;
+    row-gap: .25rem;
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+}
+
+.error {
+    background: rgba(80, 24, 24, 0.5);
+    color: #e84343;
+    border: 1px solid #e84343;
+    border-radius: .5rem;
+    padding: .25rem .5rem .25rem .5rem;
+}

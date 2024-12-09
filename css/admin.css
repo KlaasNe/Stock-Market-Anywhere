@@ -78,6 +78,15 @@ a {
     padding: 17px 23px;
     border-radius: 0px 10px 10px 0px;
 }
+#bump-prices {
+    background-color: rgba(255, 242, 0, 0.11);
+    padding: 17px 23px;
+    border-radius: 0px 10px 10px 0px;
+    height: fit-content;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
 #button_parametres {
     position: sticky;
     left: 50%;
@@ -251,4 +260,23 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 
 .container-center {
     max-width: 1200px;
+}
+
+.calculator {
+    position: absolute;
+    background: rgba(255, 255, 255, .15);
+    color: white;
+    bottom: 16px;
+    right: 16px;
+    padding: 16px;
+    font-size: 2rem;
+    border-radius: 8px;
+}
+
+{
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
 }

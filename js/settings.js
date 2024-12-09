@@ -29,13 +29,15 @@ function addProduct() {
     const item_name = document.getElementById("product").value;
     const trigram = makeTrigram(item_name);
 
+    clearErrorMessages();
+
     if (default_prices.hasOwnProperty(trigram)) {
         errors.push("An item with this abbreviation already exists");
     }
 
     const price = document.getElementById("price").value;
     if (price === "") {
-        errors.push("Item can't have no price");
+        errors.push("Item price can't be left blank");
     }
 
     let min_price = document.getElementById("min-price").value;
@@ -58,7 +60,6 @@ function addProduct() {
         document.getElementById("min-price").value = null;
         document.getElementById("product").focus();
     });
-    // TODO show error popup
 }
 
 function makeTrigram(name, maxNumberChars = 3) {
@@ -89,8 +90,7 @@ function updateName(trigram) {
     executeIfNoErrors(errors, () => {
         default_prices[trigram].full_name = new_name;
         updateTrigram(trigram, new_trigram);
-    })
-    // TODO show error popup
+    });
 }
 
 function updateTrigram(trigram, new_trigram) {
@@ -151,8 +151,7 @@ function updatePrice(trigram) {
         default_prices[trigram].initial_price = new_price;
     }).else(() => {
         price_input_field.value = default_prices[trigram].initial_price;
-    })
-    // TODO Show error popup
+    });
 }
 
 function updateMinPrice(trigram) {
@@ -177,8 +176,7 @@ function updateMinPrice(trigram) {
         default_prices[trigram].min_price = new_min_price;
     }).else(() => {
         min_price_input_field.value = default_prices[trigram].min_price;
-    })
-    // TODO Show error popup
+    });
 }
 
 function updateTitle() {
@@ -191,7 +189,7 @@ function updateTitle() {
 
     executeIfNoErrors(errors, () => {
         title = new_title;
-    })
+    });
 }
 
 function numDigitsAfterDecimal(x) {
@@ -338,7 +336,8 @@ async function openFile() {
 
 function launch() {
     localStorage.setItem("defaultPrices", JSON.stringify(getDefaultPricesWithColours()));
-    localStorage.setItem("title-input", title);
+    localStorage.setItem("event-title", title);
+    localStorage.setItem("currency", currency);
     window.location.assign("admin.html");
 }
 
@@ -351,6 +350,7 @@ function executeIfNoErrors(errors, func = () => {}, log_errors = true) {
         func();
     } else if (log_errors) {
         logErrorsInConsole(errors);
+        showErrorMessages(errors);
     }
 
     return {
@@ -364,4 +364,19 @@ function logErrorsInConsole(errors) {
     errors.forEach(error => {
         console.error(error);
     });
+}
+
+function showErrorMessages(errors) {
+    const errors_div = document.getElementById("errors");
+    clearErrorMessages();
+    errors.forEach(error => {
+        const error_message_html = document.createElement("div");
+        error_message_html.classList.add("error");
+        error_message_html.innerText = `ERROR: ${error}`;
+        errors_div.appendChild(error_message_html);
+    });
+}
+
+function clearErrorMessages() {
+    document.getElementById("errors").innerHTML = "";
 }

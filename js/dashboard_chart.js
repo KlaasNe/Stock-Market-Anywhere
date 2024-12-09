@@ -7,18 +7,14 @@ const config = {
     options: {
         plugins: {
             legend: {
-                display: true,
-                labels: {
-                    color: 'rgba(255,255,255,0.7)',
-                    boxHeight: 1,
-                }
+                display: false,
             },
             tooltip: {
                 intersect: false,
             }
         },
         resizeDelay: 300,
-        responsive: false,
+        responsive: true,
         scales: {
             y: {
                 position: 'right',

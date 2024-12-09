@@ -1,8 +1,12 @@
 const prices_listener = new ChangeListener("prices");
 const new_sale_listener = new ChangeListener("new_sale");
+const sellability_listener = new ChangeListener("sellability-state");
+const title = localStorage.getItem("event-title");
+const CURRENCY = localStorage.getItem("currency");
 let prices_history;
 let indexes;
 let is_krach;
+let drinks_sellability;
 
 init()
 
@@ -40,6 +44,11 @@ setInterval(() => {
             for (let i = 0; i < data[2]; i++) new_sale_animation(data[0], data[1])
         }
     }
+
+    if (sellability_listener.check()) {
+        drinks_sellability = sellability_listener.value
+        generate_price_display()
+    }
 }, 30)
 
 function get_last_prices(index = -1){
@@ -55,9 +64,8 @@ function get_variation(){
     let variation = {}
 
     let last_prices = get_last_prices()
-    let last_last_prices = get_last_prices(-2)
-    for(trigram in prices_history){
-        variation[trigram] = last_prices[trigram] / last_last_prices[trigram]
+    for(trigram in prices_history) {
+        variation[trigram] = last_prices[trigram] / prices_history[trigram][0]
         variation[trigram] = round((variation[trigram] - 1) * 100, 2)
     }
 
@@ -73,7 +81,7 @@ function update_cheapest(){
     cheapest.sort(function(first, second) {
         return first[1] - second[1];
     });
-      
+
 	cheapest = cheapest.splice(0,3)
 	for (let i=0; i < 3; i++) {
         try {
@@ -83,19 +91,34 @@ function update_cheapest(){
 	}
 }
 
-function generate_price_display(){
-    let last_prices = get_last_prices()
+function format_currency(price, max_price) {
+    let num_string_parts = price.toString().split(".");
+    if (num_string_parts.length < 2) {
+        num_string_parts.push("00")
+    } else if (num_string_parts.at(1).length < 2) {
+        num_string_parts[1] = num_string_parts.at(1) + "0"
+    }
+    return num_string_parts.join(".");
+
+}
+
+async function generate_price_display() {
+    let last_prices = get_last_prices();
 	let tableau = document.querySelector('#afficheur_prix tbody');
 
-	for(let trigram in defaultPrices){
+    const sellability = await sellability_listener.value
+
+    tableau.innerHTML = "";
+	for (let trigram in defaultPrices) {
+        const sold_out = !sellability[trigram];
 		tableau.innerHTML +=
 			"<tr class='prix_" + trigram + "'>" +
 				"<td class='color-indicator-table' style='color:" + defaultPrices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
-				"<td>" + defaultPrices[trigram]["full_name"] + "</td>" +
+				"<td>" + (sold_out ? `<del>${defaultPrices[trigram]["full_name"]}</del>` : `${defaultPrices[trigram]["full_name"]}`) + "</td>" +
 				"<td class='indice'>" + trigram + "</td>" +
-				"<td class='prix'>" + last_prices[trigram] + " &euro;</td>" +
+				`<td class="${sold_out ? 'prix nfs' : 'prix'}" style='display: flex; justify-content: end; gap: 8px;'><span>${CURRENCY}</span><span>${format_currency(last_prices[trigram])}</span></td>` +
 				"<td class='croissance' style='border-top-right-radius: .5rem; border-bottom-right-radius: .5rem;'>0 %</td>" +
-			"</tr>"
+			"</tr>";
 	}
 }
 
@@ -108,7 +131,7 @@ function update_prices_table(){
 		let trigram_el_price = trigram_el.querySelector('.prix');
 		let trigram_el_variation = trigram_el.querySelector('.croissance');
 
-		trigram_el_price.innerText = last_prices[trigram] + " €"
+		trigram_el_price.innerText = `${CURRENCY} ` + last_prices[trigram]
 
         let variation_sign
         variation[trigram] > 0 ? variation_sign = "+" : variation_sign = ""

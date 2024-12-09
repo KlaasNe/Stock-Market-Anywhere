@@ -1,63 +1,88 @@
 <!DOCTYPE html>
 <head>
-	<meta charset="UTF-8">
-	<title>Dashboard</title>
-	<script src="../js/external_src/chartjs.3.9.1.min.js"></script>
-	<script src="../js/external_src/luxon.1.2.0.min.js"></script>
-	<script src="../js/external_src/chartjs-adapter-luxon.min.js"></script>
-	<link href="../css/dashboard.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        @font-face {
+            font-family: "Roboto Mono";
+            src: url("../fonts/RobotoMono-Regular.ttf") format("truetype");
+        }
+
+        @font-face {
+            font-family: "Roboto";
+            src: url("../fonts/RobotoMono-Regular.ttf") format("truetype");
+        }
+    </style>
+    <script src="../js/external_src/chartjs.3.9.1.min.js"></script>
+    <script src="../js/external_src/luxon.1.2.0.min.js"></script>
+    <script src="../js/external_src/chartjs-adapter-luxon.min.js"></script>
+    <link href="../css/dashboard.css" rel="stylesheet">
 </head>
 
 
 <html lang="">
-	<body style="margin:0" class="dark">
-		<div style="height:100vh;width:100vw;margin:0;overflow:hidden;display:flex; flex-flow: column;">
-			<div id="remerciements" style="position:absolute; color:rgba(255,255,255,0.6); top:0px; right:6px;">
-				Developed by: Marc Bresson & Klaas Neyens
-			</div>
-			<div class="conteneur" style="margin:20px 10px 0px 10px; padding:0px">
-				<div id="banniere">
-					<div id="logo" style="float:left;">
-						<img src="../parameters/logo.png" class="rounded" height="100%"/>
-					</div>
-					<div id="title-input">
-						<template>Soirée bourse</template>
-					</div>
-					<span id="cheapest">
-						<span>cheapest</span>
-						<span><span class="hashtag_prix">#1</span><span class="indice" id="numero_1"></span></span>
-						<span><span class="hashtag_prix">#2</span><span class="indice" id="numero_2"></span></span>
-						<span><span class="hashtag_prix">#3</span><span class="indice" id="numero_3"></span></span>
-					</span>
-				</div>
-			</div>
-			<div style="display:flex; flex-flow: row; flex: 1 1 auto;margin:10px;">
-				<div class="chart-container conteneur" style="position: relative; height:100%; width:70%; box-sizing: border-box; margin-right: 10px; flex: 1 1 auto;">
-					<canvas id="chart" style="width:100%;height:100%;"></canvas>
-				</div>
-				<div class="conteneur" style="height:100%; width: auto; box-sizing: border-box;">
-					<table id="afficheur_prix">
-						<thead>
-							<tr>
-								<th class="cercle"></th>
-								<th class="nom">Name</th>
-								<th class="indice">index</th>
-								<th class="prix">price</th>
-								<th class="croissance">growth</th>
-							</tr>
-						</thead>
-						<tbody>
+<body style="margin:0" class="dark">
+<div style="height:100vh;width:100vw;margin:0;overflow:hidden;display:flex; flex-flow: column;">
+    <div id="remerciements" style="color:rgba(255,255,255,0.6); width: 100%; display: flex; justify-content: end;">
+        <span style="font-size: 12px; padding: 10px;">Developed by: Marc Bresson & Klaas N. & Jethro (CSS)</span>
+    </div>
+    <div style="display:flex; flex-flow: row; flex: 1 1 auto;margin: 0 10px 10px 10px;">
+        <div style="display: flex; flex-flow: column;">
+            <div class="conteneur" style="max-height: 40px; margin: 0 10px 10px 0;padding:10px 10px">
+                <div id="banniere" style="max-height: 40px;">
+                    <div id="logo" style="display: flex; align-items: center">
+                        <img src="../parameters/logo.png" class="rounded" width="50px" height="50px"/>
+                    </div>
+                    <div id="title-input">
+                        <template>Soirée bourse</template>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container conteneur"
+                 style="position: relative; height:100%; box-sizing: border-box; margin-right: 10px; flex: 1 1 auto;">
+                <canvas id="chart" style="width:100%; height:100%;"></canvas>
+            </div>
+        </div>
+        <div style="display: flex; flex-flow: column; height: 100%;">
+            <div class="conteneur" style="width: auto; box-sizing: border-box;">
+                <div id="cheapest" style="display: flex; align-items: center; justify-content: center;">
+                    <span>Cheapest:</span>
+                    <div style="display: flex; align-items: center"><span class="hashtag_prix">#1</span><span
+                            class="indice"
+                            id="numero_1"></span>
+                    </div>
+                    <div style="display: flex; align-items: center"><span class="hashtag_prix">#2</span><span
+                            class="indice"
+                            id="numero_2"></span>
+                    </div>
+                    <div style="display: flex; align-items: center"><span class="hashtag_prix">#3</span><span
+                            class="indice"
+                            id="numero_3"></span>
+                    </div>
+                </div>
+            </div>
+            <table id="afficheur_prix">
+                <thead>
+                <tr>
+                    <th class="cercle"></th>
+                    <th class="nom">Name</th>
+                    <th class="indice">Index</th>
+                    <th class="prix">Price</th>
+                    <th class="croissance">Diff</th>
+                </tr>
+                </thead>
+                <tbody>
 
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</body>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
 </html>
 
 <script>
-	minutes_for_points_history = 15
+    minutes_for_points_history = 15
 </script>
 
 <script src="../js/data.js"></script>

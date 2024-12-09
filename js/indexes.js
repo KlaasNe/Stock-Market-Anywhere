@@ -83,9 +83,13 @@ class Indexes{
     last_non_krach_index(){
         let i = this.party_index.length - 1
 
-        if(this.ongoing()){i --}
+        if (this.ongoing()) {
+            i--;
+        }
 
-        while(this.party_index[i][2]){i --}
+        while (this.party_index[i][2]) {
+            i--;
+        }
 
         return i
     }
