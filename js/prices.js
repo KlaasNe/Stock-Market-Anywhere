@@ -105,8 +105,6 @@ class Prices {
             centered_sales[drink] = centered_sales[drink] * max_var_per_sale;
         }
 
-        // TODO make something that if the total price of all drinks goes below the sum of the inital values of drinks that it redistributes this difference over the cheapest drinks
-
         return centered_sales
     }
 
@@ -152,6 +150,11 @@ class Prices {
     }
 
     compute_new_prices(new_sales, indexes, default_prices) {
+        const mapped_default_prices = {}
+        Object.keys(default_prices).forEach(function(key, index) {
+            mapped_default_prices[key] = default_prices[key]["initial_price"]
+        });
+        const original_price_sum = round(this.sum_prices(mapped_default_prices), 2)
         let former_prices = this.last_non_krach(indexes);
         let price_var = this.price_variation(new_sales, former_prices);
 
@@ -166,9 +169,29 @@ class Prices {
                     * (1 + price_var[drink] / 100))
                 , min_price
             );
-            new_prices[drink] = round(new_price, 2);
+            new_prices[drink] = new_price.toFixed(2);
+        }
+
+        const new_price_sum = round(this.sum_prices(new_prices), 2)
+        if (new_price_sum < original_price_sum) {
+            let missing_value = round(original_price_sum - new_price_sum, 2);
+            const new_prices_entries = Object.entries(new_prices)
+            new_prices_entries.sort((a, b) => a[1] - b[1])
+            for (let i = 0; i < missing_value * 100; i++) {
+                new_prices_entries[i % new_prices_entries.length][1] = round(parseFloat(new_prices_entries[i % new_prices_entries.length][1]) + 0.01, 2);
+            }
+            new_prices = Object.fromEntries(new_prices_entries)
         }
 
         return new_prices;
+    }
+
+    sum_prices(prices) {
+        let sum_prices = 0;
+        for (let drink in prices) {
+            sum_prices += parseFloat(prices[drink]);
+        }
+
+        return sum_prices
     }
 }
