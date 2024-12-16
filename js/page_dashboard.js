@@ -110,7 +110,7 @@ async function generate_price_display() {
 
     tableau.innerHTML = "";
 	for (let trigram in defaultPrices) {
-        const sold_out = !sellability[trigram];
+        const sold_out = (drinks_sellability == null) ? false : !sellability[trigram];
 		tableau.innerHTML +=
 			"<tr class='prix_" + trigram + "'>" +
 				"<td class='color-indicator-table' style='color:" + defaultPrices[trigram]["colour"] + "; border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;'>&#11044;</td>" +
